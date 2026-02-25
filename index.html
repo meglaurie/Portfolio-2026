@@ -177,10 +177,10 @@ const sidewalk = new THREE.Mesh(
 sidewalk.position.set(0, 0.1, 3);
 scene.add(sidewalk);
 
-/* =========================================
-   BOOKSTORE EXTERIOR
-   👉 MOVE INTO /src/buildings/bookstore.js
-   ========================================= */
+// /* =========================================
+//    BOOKSTORE EXTERIOR
+//    👉 MOVE INTO /src/buildings/bookstore.js
+//    ========================================= */
 
 const store = new THREE.Group();
 
@@ -215,9 +215,53 @@ windowMesh.scale.set(1, 1, 1); // adjust size if needed
 windowMesh.position.y = 2; // slightly above brick
 store.add(windowMesh);
 
+
+
+/* =========================================
+   STORE FRONT WITH REAL OPENINGS
+   ========================================= */
+
+// const facadeMat = new THREE.MeshStandardMaterial({ color: 0x2f5d50 });
+
+// const facadeDepth = 1.5;
+// const facadeHeight = 3;
+// const facadeY = 2.5; // center height (1 + 1.5 from your base)
+
+// // ---- LEFT SECTION ----
+// const leftSection = new THREE.Mesh(
+//   new THREE.BoxGeometry(1.5, facadeHeight, facadeDepth),
+//   facadeMat
+// );
+// leftSection.position.set(-2.25, facadeY, 0.25);
+// store.add(leftSection);
+
+// // ---- RIGHT SECTION ----
+// const rightSection = new THREE.Mesh(
+//   new THREE.BoxGeometry(1.5, facadeHeight, facadeDepth),
+//   facadeMat
+// );
+// rightSection.position.set(2.25, facadeY, 0.25);
+// store.add(rightSection);
+
+// // ---- TOP ABOVE DOOR ----
+// const topDoorSection = new THREE.Mesh(
+//   new THREE.BoxGeometry(1.2, 0.5, facadeDepth),
+//   facadeMat
+// );
+// topDoorSection.position.set(-1.2, 3.75, 0.25);
+// store.add(topDoorSection);
+
+// // ---- TOP ABOVE WINDOW ----
+// const topWindowSection = new THREE.Mesh(
+//   new THREE.BoxGeometry(2.0, 0.5, facadeDepth),
+//   facadeMat
+// );
+// topWindowSection.position.set(1.2, 3.75, 0.25);
+// store.add(topWindowSection);
+
 scene.add(store);
 
-/* ---------- Door ---------- */
+// /* ---------- Door ---------- */
 
 // Door pivot group (IMPORTANT for rotation)
 const doorPivot = new THREE.Group();
@@ -235,6 +279,19 @@ door.position.set(0.6, 1.25, 0); // center the door on pivot vertically
 // doorGlass.position.set(-0.6, 0.3, 0.06); // glass follows door // offset so it rotates correctly
 doorPivot.add(door);
 
+// Door pivot (hinge on left)
+// doorPivot.position.set(-1.8, 0, 1.0); 
+// store.add(doorPivot);
+
+// const door = new THREE.Mesh(
+//   new THREE.BoxGeometry(1.2, 2.5, 0.1),
+//   new THREE.MeshStandardMaterial({ color: 0x6b3e26 })
+// );
+
+// Center door relative to pivot
+door.position.set(0.6, 1.25, 0);
+doorPivot.add(door);
+
 // Glass panel
 const doorGlass = new THREE.Mesh(
   new THREE.PlaneGeometry(0.6, 0.9),
@@ -250,6 +307,21 @@ doorPivot.add(doorGlass);
 // Store reference for raycasting
 door.userData.isDoor = true;
 
+
+/* =========================================
+BOOKSTORE Window Front
+========================================= */
+// const windowGlass = new THREE.Mesh(
+//   new THREE.PlaneGeometry(2.0, 1.5),
+//   new THREE.MeshStandardMaterial({
+//     color: 0x222222,
+//     transparent: true,
+//     opacity: 0.4
+//   })
+// );
+
+// windowGlass.position.set(1.2, 2.2, 1.01);
+// store.add(windowGlass);
 
 /* =========================================
 BOOKSTORE INTERIOR (Phase 2 – Simple)
@@ -280,9 +352,11 @@ floor.position.z = 2.5;
 interior.add(floor);
 
 const wallMat = new THREE.MeshStandardMaterial({
-  color: 0xf2e6d8, // warm plaster
-  roughness: 0.9
+  color: 0xf2e6d8,
+  roughness: 0.9,
+  side: THREE.DoubleSide
 });
+
 
 // Back wall 
 const backWall = new THREE.Mesh(
@@ -318,7 +392,7 @@ function createShelf(x, z) {
   const shelf = new THREE.Group();
 
   const frame = new THREE.Mesh(
-    new THREE.BoxGeometry(0.3, 2.2, 1.5),
+    new THREE.BoxGeometry(2.5, 2.2, 0.3),
     new THREE.MeshStandardMaterial({ color: 0x5a3e2b })
   );
   frame.position.y = 1.1;
@@ -326,10 +400,10 @@ function createShelf(x, z) {
 
   // Books block (placeholder)
   const books = new THREE.Mesh(
-    new THREE.BoxGeometry(0.25, 1.8, 1.3),
+    new THREE.BoxGeometry(2, 1.8, 0.25),
     new THREE.MeshStandardMaterial({ color: 0x8b5e3c })
   );
-  books.position.set(0.05, 1.1, 0);
+  books.position.set(0.05, 1.1, -0.09);
   shelf.add(books);
 
   shelf.position.set(x, 0, z);
@@ -339,8 +413,8 @@ function createShelf(x, z) {
 }
 
 // Place shelves
-createShelf(-2.1, -1.5);
-createShelf(2.1, -1.5);
+createShelf(-1.1, -2.75);
+createShelf(1.1, -2.75);
 
 const interiorLight = new THREE.PointLight(0xffd2a6, 1.2, 10);
 interiorLight.position.set(0, 2.5, 3);
@@ -445,7 +519,7 @@ window.addEventListener('click', (event) => {
 let clock = new THREE.Clock();
 const CAMERA_START_POS = new THREE.Vector3(0, 3, 12);
 const CAMERA_INSIDE_POS = new THREE.Vector3(-1.5, 1.6, -1.2);
-const CAMERA_INSIDE_TARGET = new THREE.Vector3(-2.5, 1.5, -6.5);
+const CAMERA_INSIDE_TARGET = new THREE.Vector3(-1.5, 1.5, -6.5);
 
 
 function animate() {

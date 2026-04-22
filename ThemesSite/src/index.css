@@ -6,9 +6,13 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #E8B4E8 0%, #D4A5E8 50%, #C0B0E8 100%);
-  min-height: 100vh;
+  /* background: linear-gradient(135deg, #E8B4E8 0%, #D4A5E8 50%, #C0B0E8 100%); */
+  background-image: url('assets/Background.png');
+  background-repeat: no-repeat;
+  background-position: center center;
   background-attachment: fixed;
+  background-size: cover;
+  min-height: 100vh;
 }
 
 #app {
@@ -17,6 +21,7 @@ body {
 
 .nav-container {
   background-color: #E8B4E8;
+  height: 3em;
   padding: 20px;
   border-bottom: 3px solid #C0B0E8;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

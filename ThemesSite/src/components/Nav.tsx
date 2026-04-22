@@ -1,10 +1,9 @@
 
 import { Link } from 'react-router-dom';
-// import './Navigation.css';
 
-function Navigation() {
+function Nav() {
   return (
-    <nav>
+    <nav className='nav-container'>
       <div>
         <Link to="/" >Label</Link>
         <Link to="/about">Label</Link>
@@ -15,4 +14,4 @@ function Navigation() {
   );
 }
 
-export default Navigation;
+export default Nav;

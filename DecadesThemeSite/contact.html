@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <?php
+        // Log the visitor's IP address
+        $userIP = $_SERVER['REMOTE_ADDR'];
+        $logEntry = "IP: $userIP visited on " . date('Y-m-d H:i:s') . "\n";
+        file_put_contents('visitor_log.txt', $logEntry, FILE_APPEND);
+    ?>
+    <div class="contact-container">
+        <h1>Contact Me</h1>
+        <form id="contactForm" action="processContact.php" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+            
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" placeholder="Subject" required>
+            
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+body {
+    background-color: purple; /* Purple background */
+    color: hotpink; /* Hot pink text */
+    font-family: 'Arial', sans-serif; /* Font style */
+    text-align: center; /* Centered text */
+}
+
+h1 {
+    font-size: 3em; /* Large heading */
+    margin-top: 50px; /* Space above the heading */
+}
+
+button {
+    background-color: hotpink; /* Hot pink buttons */
+    color: purple; /* Purple text */
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff66b2; /* Lighter pink on hover */
+}
+
+a {
+    color: #000000; /* Black links */
+    text-decoration: none; /* No underline */
+}
+
+a:hover {
+    text-decoration: underline; /* Underline on hover */
+}

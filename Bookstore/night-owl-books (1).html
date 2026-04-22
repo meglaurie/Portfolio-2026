@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Night Owl Books</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { overflow: hidden; background: #000; font-family: Georgia, serif; }
+    canvas { display: block; }
+
+    #nav {
+      position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 14px; z-index: 100;
+    }
+    #nav button {
+      background: rgba(18,10,4,0.85); color: #f5deb3; border: 1px solid #8b6914;
+      border-radius: 30px; padding: 10px 24px; font-family: Georgia, serif;
+      font-size: 14px; cursor: pointer; backdrop-filter: blur(6px);
+      transition: background 0.2s, transform 0.15s; letter-spacing: 0.04em;
+    }
+    #nav button:hover { background: rgba(139,105,20,0.5); transform: translateY(-2px); }
+    #nav button:disabled { opacity: 0.28; cursor: default; transform: none; }
+
+    #hint {
+      position: fixed; top: 22px; left: 50%; transform: translateX(-50%);
+      color: rgba(245,222,179,0.9); font-size: 13px; letter-spacing: 0.07em;
+      pointer-events: none; text-shadow: 0 1px 8px #000; z-index: 100;
+      white-space: nowrap;
+    }
+
+    #cursor-label {
+      position: fixed; pointer-events: none; color: #f5deb3; font-size: 12px;
+      background: rgba(0,0,0,0.72); padding: 4px 11px; border-radius: 12px;
+      border: 1px solid rgba(139,105,20,0.55); display: none; z-index: 200;
+    }
+
+    .overlay {
+      display: none; position: fixed; inset: 0; z-index: 300;
+      align-items: center; justify-content: center;
+    }
+    .overlay.active { display: flex; }
+    .overlay-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.74); backdrop-filter: blur(4px);
+    }
+    .overlay-card {
+      position: relative; background: #1a120a; border: 1px solid #6b4c1e;
+      border-radius: 12px; padding: 38px 42px; max-width: 520px; width: 90%;
+      color: #f5deb3; box-shadow: 0 8px 40px rgba(0,0,0,0.75);
+      animation: cardIn 0.32s cubic-bezier(.22,.68,0,1.2);
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(18px) scale(0.97); }
+      to   { opacity: 1; transform: none; }
+    }
+    .overlay-card h2 { font-size: 21px; margin-bottom: 14px; color: #e8c97a; }
+    .overlay-card p  { font-size: 15px; line-height: 1.72; color: #d4b896; margin-bottom: 10px; }
+    .close-btn {
+      position: absolute; top: 13px; right: 17px; background: none;
+      border: none; color: #8b6914; font-size: 22px; cursor: pointer;
+    }
+    .close-btn:hover { color: #e8c97a; }
+    .photo-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 12px; }
+    .photo-grid div {
+      aspect-ratio: 1; border-radius: 6px; background: #2a1f14;
+      border: 1px solid #4a3520; display: flex; align-items: center;
+      justify-content: center; font-size: 26px;
+    }
+    .overlay-card input,
+    .overlay-card textarea {
+      width: 100%; background: #110c07; border: 1px solid #5a3e1a;
+      border-radius: 6px; color: #f5deb3; padding: 9px 11px;
+      font-family: Georgia, serif; font-size: 14px; margin-bottom: 10px;
+      resize: vertical; outline: none;
+    }
+    .overlay-card textarea { min-height: 88px; }
+    .submit-btn {
+      background: #6b4c1e; color: #f5deb3; border: none;
+      border-radius: 20px; padding: 10px 26px;
+      font-family: Georgia, serif; cursor: pointer;
+    }
+    .submit-btn:hover { background: #8b6914; }
+    .music-keys { display: flex; gap: 7px; margin-top: 14px; flex-wrap: wrap; }
+    .music-key {
+      background: #2a1f14; border: 1px solid #8b6914; border-radius: 6px;
+      padding: 11px 17px; color: #e8c97a; cursor: pointer; font-size: 14px;
+      user-select: none; transition: background 0.15s;
+    }
+    .music-key:hover  { background: #3d2b10; }
+    .music-key.active { background: #6b4c1e; }
+    #music-display { margin-top: 13px; font-size: 19px; letter-spacing: 7px; color: #e8c97a; min-height: 26px; }
+    #music-msg     { margin-top: 7px; font-size: 13px; color: #9b8560; }
+  </style>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three":         "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+
+<div id="nav">
+  <button id="btn-back"   disabled>Back</button>
+  <button id="btn-fwd"    disabled>Forward</button>
+  <button id="btn-street" style="display:none">Back to Street</button>
+</div>
+<div id="hint">Click the front door to enter Night Owl Books</div>
+<div id="cursor-label"></div>
+
+<!-- OVERLAYS -->
+<div class="overlay" id="ov-about">
+  <div class="overlay-backdrop" onclick="closeOverlay('ov-about')"></div>
+  <div class="overlay-card">
+    <button class="close-btn" onclick="closeOverlay('ov-about')">X</button>
+    <h2>About the Keeper</h2>
+    <p>Welcome, wanderer. I am the proprietor of Night Owl Books, collector of stories, keeper of curiosities, and devoted servant to the cats who own this shop.</p>
+    <p>Every book here has a story. Every trinket on these shelves chose to stay.</p>
+    <p>Come back any time. The owl is always watching.</p>
+  </div>
+</div>
+
+<div class="overlay" id="ov-photos">
+  <div class="overlay-backdrop" onclick="closeOverlay('ov-photos')"></div>
+  <div class="overlay-card">
+    <button class="close-btn" onclick="closeOverlay('ov-photos')">X</button>
+    <h2>Photo Album</h2>
+    <p>Moments captured through the shop window over the years.</p>
+    <div class="photo-grid">
+      <div>&#127750;</div><div>&#128218;</div><div>&#129417;</div>
+      <div>&#9749;</div><div>&#127769;</div><div>&#127928;</div>
+      <div>&#128336;</div><div>&#127807;</div><div>&#10024;</div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="ov-music">
+  <div class="overlay-backdrop" onclick="closeOverlay('ov-music')"></div>
+  <div class="overlay-card">
+    <button class="close-btn" onclick="closeOverlay('ov-music')">X</button>
+    <h2>Night Owl Jukebox</h2>
+    <p>Play the secret melody. Hint: <strong style="color:#e8c97a">A - D - F - C - E</strong></p>
+    <div class="music-keys">
+      <div class="music-key" onclick="pressNote('A')">A</div>
+      <div class="music-key" onclick="pressNote('B')">B</div>
+      <div class="music-key" onclick="pressNote('C')">C</div>
+      <div class="music-key" onclick="pressNote('D')">D</div>
+      <div class="music-key" onclick="pressNote('E')">E</div>
+      <div class="music-key" onclick="pressNote('F')">F</div>
+      <div class="music-key" onclick="pressNote('G')">G</div>
+    </div>
+    <div id="music-display"></div>
+    <div id="music-msg">Try the sequence above...</div>
+  </div>
+</div>
+
+<div class="overlay" id="ov-contact">
+  <div class="overlay-backdrop" onclick="closeOverlay('ov-contact')"></div>
+  <div class="overlay-card">
+    <button class="close-btn" onclick="closeOverlay('ov-contact')">X</button>
+    <h2>Ring the Shop</h2>
+    <p>Leave a message. We will get back to you when the owl is awake.</p>
+    <input type="text"  placeholder="Your name" />
+    <input type="email" placeholder="Your email" />
+    <textarea placeholder="Your message..."></textarea>
+    <button class="submit-btn" onclick="alert('Message sent!')">Send Message</button>
+  </div>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ============================================================
+   RENDERER / SCENE / CAMERA
+   ============================================================ */
+var scene    = new THREE.Scene();
+var camera   = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 500);
+var renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled   = true;
+renderer.shadowMap.type      = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace    = THREE.SRGBColorSpace;
+renderer.toneMapping         = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.6;
+document.body.prepend(renderer.domElement);
+
+var controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.07;
+controls.enablePan     = false;
+
+/* ============================================================
+   STATE MACHINE
+   ============================================================ */
+var appState      = 'street';
+var transitioning = false;
+var camTargetPos  = null;
+var camTargetLook = null;
+var onArrival     = null;
+
+var VIEWS = {
+  'street':   { pos: new THREE.Vector3(0, 2.6, 14),      look: new THREE.Vector3(0, 2.0,  0),   minD: 5,   maxD: 22, polar: Math.PI / 2.05 },
+  'inside-0': { pos: new THREE.Vector3(0, 1.9,  -3.5),    look: new THREE.Vector3(0, 1.7, -7),   minD: 0.5, maxD: 10, polar: Math.PI / 1.6  },
+  'inside-1': { pos: new THREE.Vector3(-2.5, 1.8, -1.5), look: new THREE.Vector3(5, 1.5, -1.5), minD: 0.5, maxD: 10, polar: Math.PI / 1.6  },
+  'inside-2': { pos: new THREE.Vector3(0, 1.9, -4),      look: new THREE.Vector3(0, 1.6,  8),   minD: 0.5, maxD: 10, polar: Math.PI / 1.6  }
+};
+
+function applyView(s) {
+  var v = VIEWS[s];
+  controls.minDistance   = v.minD;
+  controls.maxDistance   = v.maxD;
+  controls.maxPolarAngle = v.polar;
+}
+
+function transitionTo(s) {
+  if (transitioning) return;
+  transitioning    = true;
+  controls.enabled = false;
+  var v = VIEWS[s];
+  camTargetPos  = v.pos.clone();
+  camTargetLook = v.look.clone();
+  onArrival = function() {
+    appState         = s;
+    applyView(s);
+    transitioning    = false;
+    controls.enabled = true;
+    updateNav();
+    updateHint();
+  };
+}
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function box(w, h, d, col, rough, metal) {
+  if (rough === undefined) rough = 0.8;
+  if (metal === undefined) metal = 0;
+  var m = new THREE.Mesh(
+    new THREE.BoxGeometry(w, h, d),
+    new THREE.MeshStandardMaterial({ color: col, roughness: rough, metalness: metal })
+  );
+  m.castShadow = m.receiveShadow = true;
+  return m;
+}
+
+function cyl(rt, rb, h, col, seg) {
+  if (seg === undefined) seg = 12;
+  var m = new THREE.Mesh(
+    new THREE.CylinderGeometry(rt, rb, h, seg),
+    new THREE.MeshStandardMaterial({ color: col, roughness: 0.7 })
+  );
+  m.castShadow = m.receiveShadow = true;
+  return m;
+}
+
+/* Canvas texture for text signs */
+function makeTextTexture(text, w, h, bgColor, fgColor, fontSize) {
+  var canvas  = document.createElement('canvas');
+  canvas.width  = w;
+  canvas.height = h;
+  var ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = bgColor;
+  ctx.fillRect(0, 0, w, h);
+
+  ctx.strokeStyle = fgColor;
+  ctx.lineWidth   = 3;
+  ctx.strokeRect(5, 5, w - 10, h - 10);
+
+  ctx.fillStyle    = fgColor;
+  ctx.font         = 'bold ' + fontSize + 'px Georgia, serif';
+  ctx.textAlign    = 'center';
+  ctx.textBaseline = 'middle';
+
+  ctx.shadowColor = fgColor;
+  ctx.shadowBlur  = 20;
+  ctx.fillText(text, w / 2, h / 2);
+  ctx.shadowBlur  = 0;
+  ctx.fillText(text, w / 2, h / 2);
+
+  return new THREE.CanvasTexture(canvas);
+}
+
+/* ============================================================
+   SKY
+   ============================================================ */
+scene.add(new THREE.Mesh(
+  new THREE.SphereGeometry(300, 32, 16),
+  new THREE.ShaderMaterial({
+    side: THREE.BackSide,
+    uniforms: {
+      top: { value: new THREE.Color(0x060218) },
+      mid: { value: new THREE.Color(0x140a38) },
+      bot: { value: new THREE.Color(0x2a0e55) }
+    },
+    vertexShader: [
+      'varying vec3 vP;',
+      'void main(){',
+      '  vP=(modelMatrix*vec4(position,1.0)).xyz;',
+      '  gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);',
+      '}'
+    ].join('\n'),
+    fragmentShader: [
+      'uniform vec3 top,mid,bot;',
+      'varying vec3 vP;',
+      'void main(){',
+      '  float h=normalize(vP).y*0.5+0.5;',
+      '  vec3 c=h>0.5?mix(mid,top,(h-0.5)*2.0):mix(bot,mid,h*2.0);',
+      '  gl_FragColor=vec4(c,1.0);',
+      '}'
+    ].join('\n')
+  })
+));
+
+/* Stars */
+(function() {
+  var verts = [];
+  for (var i = 0; i < 900; i++) {
+    var t = Math.random() * Math.PI * 2;
+    var p = Math.acos(2 * Math.random() - 1);
+    var r = 240;
+    verts.push(r * Math.sin(p) * Math.cos(t), r * Math.cos(p), r * Math.sin(p) * Math.sin(t));
+  }
+  var g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+  scene.add(new THREE.Points(g, new THREE.PointsMaterial({ color: 0xffffff, size: 0.55, sizeAttenuation: true })));
+}());
+
+/* Moon */
+var moonMesh = new THREE.Mesh(
+  new THREE.SphereGeometry(5, 20, 20),
+  new THREE.MeshStandardMaterial({ color: 0xf0e8c0, emissive: 0xf0e8c0, emissiveIntensity: 1.0, roughness: 1 })
+);
+moonMesh.position.set(-80, 95, -150);
+scene.add(moonMesh);
+var moonPL = new THREE.PointLight(0xc0c8ff, 0.8, 500);
+moonPL.position.copy(moonMesh.position);
+scene.add(moonPL);
+
+/* ============================================================
+   GLOBAL LIGHTING  -- the three key fixes
+   1. Much higher ambient so nothing is pitch black
+   2. Strong directional fill from the front
+   3. toneMappingExposure raised to 1.6 above
+   ============================================================ */
+scene.add(new THREE.AmbientLight(0x6677cc, 2.0));
+
+var moonDir = new THREE.DirectionalLight(0x99aadd, 1.4);
+moonDir.position.set(-5, 12, 5);
+moonDir.castShadow = true;
+scene.add(moonDir);
+
+var fillLight = new THREE.DirectionalLight(0x887755, 1.0);
+fillLight.position.set(4, 3, 12);
+scene.add(fillLight);
+
+/* ============================================================
+   GROUND
+   ============================================================ */
+var streetMesh = box(140, 0.2, 24, 0x282830, 0.95);
+streetMesh.position.set(0, -0.1, 6);
+scene.add(streetMesh);
+
+var sidewalk = box(140, 0.3, 7, 0x686878, 0.88);
+sidewalk.position.set(0, 0.05, 1.5);
+scene.add(sidewalk);
+
+/* ============================================================
+   GAS LAMPS
+   ============================================================ */
+var lampLights = [];
+
+function mkLamp(x, z) {
+  var g    = new THREE.Group();
+  var post = cyl(0.065, 0.1, 5.5, 0x404040);
+  post.position.y = 2.75;
+  g.add(post);
+
+  var arm = box(1.0, 0.07, 0.07, 0x404040);
+  arm.position.set(0.5, 5.4, 0);
+  g.add(arm);
+
+  var head = box(0.3, 0.34, 0.3, 0x484848);
+  head.position.set(1.0, 5.4, 0);
+  g.add(head);
+
+  var glowMesh = new THREE.Mesh(
+    new THREE.BoxGeometry(0.2, 0.26, 0.2),
+    new THREE.MeshStandardMaterial({ color: 0xffc060, emissive: 0xffc060, emissiveIntensity: 6 })
+  );
+  glowMesh.position.set(1.0, 5.4, 0);
+  g.add(glowMesh);
+
+  var lp = new THREE.PointLight(0xffaa44, 10, 20);
+  lp.position.set(1.0, 5.1, 0);
+  lp.castShadow = true;
+  g.add(lp);
+
+  g.position.set(x, 0, z);
+  scene.add(g);
+  return lp;
+}
+
+[-10.5, -4.0, 4.0, 10.5].forEach(function(x) {
+  lampLights.push(mkLamp(x, 2.5));
+});
+
+/* ============================================================
+   TREES
+   ============================================================ */
+var trees = [];
+
+function mkTree(x) {
+  var g     = new THREE.Group();
+  var trunk = cyl(0.13, 0.2, 3.4, 0x4a2e14);
+  trunk.position.y = 1.7;
+  g.add(trunk);
+
+  var coneColors = [0x224828, 0x286030, 0x2e7038];
+  var coneData   = [[1.1, 2.8], [0.9, 3.7], [0.7, 4.5]];
+  coneData.forEach(function(d, i) {
+    var cone = new THREE.Mesh(
+      new THREE.ConeGeometry(d[0], 1.6, 9),
+      new THREE.MeshStandardMaterial({ color: coneColors[i], roughness: 0.85 })
+    );
+    cone.position.y = d[1];
+    cone.castShadow = true;
+    g.add(cone);
+  });
+
+  g.position.set(x, 0, 3.5);
+  scene.add(g);
+  trees.push(g);
+}
+
+[-11, -4.5, 4.5, 11].forEach(mkTree);
+
+/* ============================================================
+   FRENCH CAFE
+   ============================================================ */
+(function() {
+  var g = new THREE.Group();
+
+  var bld = box(5.8, 6.5, 3.0, 0xc8a070, 0.82);
+  bld.position.y = 3.25;
+  g.add(bld);
+
+  var top = box(5.8, 1.4, 3.0, 0xeeddcc, 0.82);
+  top.position.y = 7.2;
+  g.add(top);
+
+  var awn = box(6.0, 0.15, 2.2, 0xcc2233, 0.75);
+  awn.position.set(0, 3.3, 1.9);
+  g.add(awn);
+
+  for (var i = -2; i <= 2; i++) {
+    var stripe = box(0.3, 0.15, 2.2, 0xf8f8f8, 0.75);
+    stripe.position.set(i * 1.0, 3.3, 1.9);
+    g.add(stripe);
+  }
+
+  var signBoard = box(4.0, 0.6, 0.13, 0x7a1020, 0.6);
+  signBoard.position.set(0, 4.0, 2.82);
+  g.add(signBoard);
+
+  var cafeTex = makeTextTexture('Le Petit Cafe', 512, 96, '#7a1020', '#ffd888', 42);
+  var cafeSign = new THREE.Mesh(
+    new THREE.PlaneGeometry(3.6, 0.52),
+    new THREE.MeshStandardMaterial({ map: cafeTex, emissiveMap: cafeTex, emissive: new THREE.Color(1, 1, 1), emissiveIntensity: 0.7 })
+  );
+  cafeSign.position.set(0, 4.0, 2.89);
+  g.add(cafeSign);
+
+  [-1.5, 0, 1.5].forEach(function(xi) {
+    var win = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.2, 1.8),
+      new THREE.MeshStandardMaterial({ color: 0xffdd80, emissive: 0xffdd80, emissiveIntensity: 0.7, transparent: true, opacity: 0.8 })
+    );
+    win.position.set(xi, 2.4, 2.92);
+    g.add(win);
+  });
+
+  var cafeLight = new THREE.PointLight(0xffcc60, 5, 14);
+  cafeLight.position.set(0, 2, 3.5);
+  g.add(cafeLight);
+
+  var tbl  = box(0.9, 0.06, 0.9, 0xb89868, 0.75);  tbl.position.set(-1.8, 1.0, 3.9);  g.add(tbl);
+  var tleg = cyl(0.04, 0.04, 1.0, 0x999999);         tleg.position.set(-1.8, 0.5, 3.9); g.add(tleg);
+  var ch   = box(0.52, 0.06, 0.52, 0xcc2233, 0.75);  ch.position.set(-1.0, 0.62, 4.0);  g.add(ch);
+
+  g.position.set(-6.5, 0, 0);
+  scene.add(g);
+}());
+
+/* ============================================================
+   CONVENIENCE STORE
+   ============================================================ */
+(function() {
+  var g = new THREE.Group();
+
+  var bld = box(5.8, 5.8, 3.0, 0xd0d8e0, 0.78);
+  bld.position.y = 2.9;
+  g.add(bld);
+
+  var red = box(6.0, 1.2, 3.05, 0xee2020, 0.65);
+  red.position.y = 5.4;
+  g.add(red);
+
+  var sevenTex = makeTextTexture('7-ELEVEN', 512, 100, '#ee2020', '#ffffff', 56);
+  var sevenSign = new THREE.Mesh(
+    new THREE.PlaneGeometry(3.8, 0.7),
+    new THREE.MeshStandardMaterial({ map: sevenTex, emissiveMap: sevenTex, emissive: new THREE.Color(1, 1, 1), emissiveIntensity: 1.0 })
+  );
+  sevenSign.position.set(0, 5.4, 2.91);
+  g.add(sevenSign);
+
+  [-1.5, 0, 1.5].forEach(function(xi) {
+    var win = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.3, 2.1),
+      new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 1.2, transparent: true, opacity: 0.85 })
+    );
+    win.position.set(xi, 2.3, 2.92);
+    g.add(win);
+  });
+
+  var shopLight = new THREE.PointLight(0xffffff, 6, 14);
+  shopLight.position.set(0, 2, 3.5);
+  g.add(shopLight);
+
+  g.position.set(6.5, 0, 0);
+  scene.add(g);
+}());
+
+/* ============================================================
+   BOOKSTORE EXTERIOR
+   ============================================================ */
+var store = new THREE.Group();
+
+/* Brick base */
+var brickBase = box(6.5, 1.5, 2.8, 0x8a3a28, 0.9);
+brickBase.position.y = 0.75;
+store.add(brickBase);
+for (var r = 0; r < 5; r++) {
+  var bl = box(6.6, 0.04, 2.9, 0x5a1e10, 0.95);
+  bl.position.set(0, 0.18 + r * 0.3, 0.01);
+  store.add(bl);
+}
+for (var c = -3; c <= 3; c++) {
+  var bv = box(0.04, 1.5, 2.9, 0x5a1e10, 0.95);
+  bv.position.set(c * 0.9, 0.75, 0.01);
+  store.add(bv);
+}
+
+/* Green facade */
+var facade = box(6.5, 4.3, 2.65, 0x2e5040, 0.75);
+facade.position.set(0, 3.25, 0.08);
+store.add(facade);
+for (var fi = -3; fi <= 3; fi++) {
+  var batten = box(0.1, 4.3, 2.7, 0x1e3828, 0.78);
+  batten.position.set(fi * 0.95, 3.25, 0.08);
+  store.add(batten);
+}
+[0, 1.2, 2.5, 3.8].forEach(function(dy) {
+  var rail = box(6.6, 0.1, 2.7, 0x1e3828, 0.78);
+  rail.position.set(0, 1.25 + dy, 0.08);
+  store.add(rail);
+});
+
+/* Roof */
+var roofM   = box(6.9, 0.5, 3.1, 0x282010, 0.88);
+roofM.position.set(0, 5.55, 0);
+store.add(roofM);
+
+var cornice = box(7.1, 0.3, 3.2, 0x201808, 0.88);
+cornice.position.set(0, 5.82, 0);
+store.add(cornice);
+
+/* ---- STORE SIGN with canvas text ---- */
+var signBoard = box(4.8, 0.85, 0.22, 0x18120a, 0.45);
+signBoard.position.set(0, 5.12, 1.46);
+store.add(signBoard);
+
+var signTex  = makeTextTexture('Night Owl Books', 1024, 160, '#100c04', '#f0c830', 74);
+var signFace = new THREE.Mesh(
+  new THREE.PlaneGeometry(4.5, 0.72),
+  new THREE.MeshStandardMaterial({
+    map: signTex,
+    emissiveMap: signTex,
+    emissive: new THREE.Color(1, 1, 1),
+    emissiveIntensity: 1.4
+  })
+);
+signFace.position.set(0, 5.12, 1.58);
+store.add(signFace);
+
+/* Two lights bracketing the sign */
+var signLight1 = new THREE.PointLight(0xffee88, 6, 5);
+signLight1.position.set(-1.5, 4.7, 2.4);
+store.add(signLight1);
+
+var signLight2 = new THREE.PointLight(0xffee88, 6, 5);
+signLight2.position.set(1.5, 4.7, 2.4);
+store.add(signLight2);
+
+/* ---- WINDOW (right side) -- bright warm glow ---- */
+var winFrame = box(2.9, 2.5, 0.15, 0x1e3828, 0.65);
+winFrame.position.set(1.4, 2.75, 1.44);
+store.add(winFrame);
+
+/* Bright inner glow -- this is the key: high emissiveIntensity warm plane */
+var winGlowMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(2.4, 2.05),
+  new THREE.MeshStandardMaterial({
+    color: 0xffcc66,
+    emissive: 0xffcc66,
+    emissiveIntensity: 3.0,
+    transparent: true,
+    opacity: 0.95
+  })
+);
+winGlowMesh.position.set(1.4, 2.75, 1.43);
+store.add(winGlowMesh);
+
+/* Semi-transparent glass layer on front */
+var winGlass = new THREE.Mesh(
+  new THREE.PlaneGeometry(2.52, 2.18),
+  new THREE.MeshStandardMaterial({ color: 0xaaccee, transparent: true, opacity: 0.15, metalness: 0.3 })
+);
+winGlass.position.set(1.4, 2.75, 1.52);
+store.add(winGlass);
+
+/* Window cross-bars */
+var wbH = box(2.95, 0.07, 0.1, 0x1e3828); wbH.position.set(1.4, 2.75, 1.46); store.add(wbH);
+var wbV = box(0.07, 2.55, 0.1, 0x1e3828); wbV.position.set(1.4, 2.75, 1.46); store.add(wbV);
+
+/* Strong point lights spilling outward from the window */
+var shopGlow1 = new THREE.PointLight(0xffaa44, 10, 12);
+shopGlow1.position.set(1.4, 2.5, 2.6);
+store.add(shopGlow1);
+
+var shopGlow2 = new THREE.PointLight(0xffcc66, 7, 10);
+shopGlow2.position.set(0, 2.5, 2.0);
+store.add(shopGlow2);
+
+/* ---- DOOR (left side) ---- */
+var doorFrameM = box(1.55, 3.1, 0.16, 0x1e3828, 0.65);
+doorFrameM.position.set(-1.5, 1.85, 1.44);
+store.add(doorFrameM);
+
+var doorPivot = new THREE.Group();
+doorPivot.position.set(-2.22, 0, 1.44);
+store.add(doorPivot);
+
+var doorMesh = box(1.28, 2.7, 0.1, 0x4a2210, 0.62);
+doorMesh.position.set(0.64, 1.75, 0);
+doorPivot.add(doorMesh);
+doorMesh.userData.isDoor = true;
+doorMesh.userData.label  = 'Enter Night Owl Books';
+
+var dGlass = new THREE.Mesh(
+  new THREE.PlaneGeometry(0.68, 0.98),
+  new THREE.MeshStandardMaterial({ color: 0xaaccee, transparent: true, opacity: 0.4 })
+);
+dGlass.position.set(0.64, 1.88, 0.06);
+doorPivot.add(dGlass);
+
+var knob = cyl(0.04, 0.04, 0.11, 0xc09830, 16);
+knob.rotation.z = Math.PI / 2;
+knob.position.set(1.16, 1.68, 0.06);
+doorPivot.add(knob);
+
+[0, 1].forEach(function(i) {
+  var p = box(0.88, 0.56, 0.04, 0x381808, 0.72);
+  p.position.set(0.64, 2.25 - i * 0.82, 0.06);
+  doorPivot.add(p);
+});
+
+var step = box(1.75, 0.15, 0.68, 0x909090, 0.82);
+step.position.set(-1.5, 0.07, 1.8);
+store.add(step);
+
+scene.add(store);
+
+/* ============================================================
+   WINDOW DISPLAY OBJECTS
+   ============================================================ */
+var bookStandE = box(0.5, 0.055, 0.33, 0x6a4820, 0.72);
+bookStandE.position.set(0.9, 1.92, 1.35);
+store.add(bookStandE);
+
+var openBookE = box(0.46, 0.065, 0.37, 0xf8eecc, 0.62);
+openBookE.position.set(0.9, 1.97, 1.35);
+store.add(openBookE);
+
+var camBodyE = box(0.31, 0.23, 0.21, 0x382010, 0.45);
+camBodyE.position.set(1.72, 1.92, 1.34);
+camBodyE.userData.isWindowCam = true;
+camBodyE.userData.label       = 'Photo Album';
+store.add(camBodyE);
+
+var lensE = cyl(0.065, 0.065, 0.15, 0x181818, 16);
+lensE.rotation.z = Math.PI / 2;
+lensE.position.set(1.89, 1.92, 1.34);
+store.add(lensE);
+
+var gBodyE = new THREE.Mesh(
+  new THREE.SphereGeometry(0.2, 12, 10),
+  new THREE.MeshStandardMaterial({ color: 0xa04020, roughness: 0.48 })
+);
+gBodyE.scale.set(1, 1.65, 0.38);
+gBodyE.position.set(2.2, 1.95, 1.33);
+gBodyE.userData.isGuitar = true;
+gBodyE.userData.label    = 'Jukebox';
+store.add(gBodyE);
+
+var gNeckE = box(0.065, 0.68, 0.06, 0x6a2e10, 0.62);
+gNeckE.position.set(2.2, 2.5, 1.33);
+store.add(gNeckE);
+
+/* ============================================================
+   INTERIOR
+   ============================================================ */
+var INT_Z    = -2.5;
+var interior = new THREE.Group();
+interior.position.set(0, 0, INT_Z);
+scene.add(interior);
+
+var RW = 6.3, RD = 12, RH = 3.6;
+
+/* Floor */
+var floorMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(RW, RD),
+  new THREE.MeshStandardMaterial({ color: 0x3a2210, roughness: 0.88 })
+);
+floorMesh.rotation.x = -Math.PI / 2;
+interior.add(floorMesh);
+
+for (var fi2 = 0; fi2 < 11; fi2++) {
+  var board = box(RW, 0.014, 0.07, 0x2e1a0a, 0.92);
+  board.position.set(0, 0.01, fi2 * 1.1 - RD / 2 + 0.55);
+  interior.add(board);
+}
+
+/* Ceiling */
+var ceilMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(RW, RD),
+  new THREE.MeshStandardMaterial({ color: 0x201408, roughness: 0.95 })
+);
+ceilMesh.rotation.x = Math.PI / 2;
+ceilMesh.position.y = RH;
+interior.add(ceilMesh);
+
+/* Walls */
+var wallMat = new THREE.MeshStandardMaterial({ color: 0x4a2c16, roughness: 0.88, side: THREE.DoubleSide });
+
+var backWall = new THREE.Mesh(new THREE.PlaneGeometry(RW, RH), wallMat);
+backWall.position.set(0, RH / 2, -RD / 2);
+interior.add(backWall);
+
+var leftWall = new THREE.Mesh(new THREE.PlaneGeometry(RD, RH), wallMat);
+leftWall.rotation.y = Math.PI / 2;
+leftWall.position.set(-RW / 2, RH / 2, 0);
+interior.add(leftWall);
+
+var rightWall = new THREE.Mesh(new THREE.PlaneGeometry(RD, RH), wallMat);
+rightWall.rotation.y = -Math.PI / 2;
+rightWall.position.set(RW / 2, RH / 2, 0);
+interior.add(rightWall);
+
+/* ============================================================
+   INTERIOR LIGHTS -- warm and bright
+   ============================================================ */
+interior.add(new THREE.AmbientLight(0xaa7733, 4.0));
+
+var cl1 = new THREE.PointLight(0xffdd88, 8, 20);
+cl1.position.set(0, 3.3, 0);
+cl1.castShadow = true;
+interior.add(cl1);
+
+var cl2 = new THREE.PointLight(0xffaa44, 6, 16);
+cl2.position.set(0, 3.2, -5);
+interior.add(cl2);
+
+var cl3 = new THREE.PointLight(0xffcc66, 5, 14);
+cl3.position.set(0, 3.2, -10);
+interior.add(cl3);
+
+var sc1 = new THREE.PointLight(0xffcc88, 4, 7);
+sc1.position.set(-RW / 2 + 0.5, 2.6, 0);
+interior.add(sc1);
+
+var sc2 = new THREE.PointLight(0xffcc88, 4, 7);
+sc2.position.set(RW / 2 - 0.5, 2.6, 0);
+interior.add(sc2);
+
+/* ============================================================
+   BOOK SHELF FILLER
+   ============================================================ */
+var BOOK_COLORS = [0xcc2222, 0x2266cc, 0x229944, 0xdd9900, 0x9922aa, 0x229999, 0xdd6611, 0x4444cc, 0xcc5511, 0x44aa44, 0x9999dd, 0xdd4444];
+
+function randBookColor() {
+  return BOOK_COLORS[Math.floor(Math.random() * BOOK_COLORS.length)];
+}
+
+function fillShelf(parent, rows, shelfW, baseY, baseZ) {
+  for (var row = 0; row < rows; row++) {
+    var shY = baseY + row * 0.65;
+    var sh  = box(shelfW, 0.07, 0.52, 0x3a1a08, 0.62);
+    sh.position.set(0, shY, baseZ + 0.02);
+    parent.add(sh);
+
+    var bx = -(shelfW / 2) + 0.08;
+    while (bx < (shelfW / 2) - 0.08) {
+      var bw = 0.09 + Math.random() * 0.1;
+      var bh = 0.38 + Math.random() * 0.26;
+      var bc = randBookColor();
+      var bm = box(bw, bh, 0.22, bc, 0.65);
+      bm.position.set(bx + bw / 2, shY + bh / 2 + 0.04, baseZ + 0.02);
+      parent.add(bm);
+      bx += bw + 0.013;
+    }
+  }
+}
+
+/* ============================================================
+   BACK WALL GRAND SHELF
+   ============================================================ */
+var backShelfG = new THREE.Group();
+var bsFrame    = box(RW - 0.2, RH - 0.3, 0.55, 0x2a1208, 0.62);
+bsFrame.position.set(0, (RH - 0.3) / 2, 0);
+backShelfG.add(bsFrame);
+fillShelf(backShelfG, 5, RW - 0.5, 0.38, 0);
+backShelfG.position.set(0, 0, -RD / 2 + 0.3);
+interior.add(backShelfG);
+
+/* ============================================================
+   TRINKETS
+   ============================================================ */
+var SHELF_Z = -RD / 2 + 0.34;
+
+/* Rotary phone */
+var phoneGrp = new THREE.Group();
+var pb = box(0.32, 0.14, 0.24, 0x181818, 0.38);
+pb.position.y = 0.07;
+phoneGrp.add(pb);
+
+var pd = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.1, 0.1, 0.026, 14),
+  new THREE.MeshStandardMaterial({ color: 0x282828, roughness: 0.38 })
+);
+pd.position.set(0, 0.15, 0);
+phoneGrp.add(pd);
+
+var ph = new THREE.Mesh(
+  new THREE.TorusGeometry(0.075, 0.023, 6, 14),
+  new THREE.MeshStandardMaterial({ color: 0x111111 })
+);
+ph.rotation.x = Math.PI / 2;
+ph.position.y = 0.22;
+phoneGrp.add(ph);
+
+phoneGrp.position.set(-2.2, 3.18, SHELF_Z);
+phoneGrp.userData.isPhone = pb.userData.isPhone = pd.userData.isPhone = ph.userData.isPhone = true;
+phoneGrp.userData.label   = 'Contact Us';
+interior.add(phoneGrp);
+
+/* Tiffany lamp */
+var tlBase = cyl(0.05, 0.09, 0.35, 0x667733);
+tlBase.position.set(1.5, 3.08, SHELF_Z);
+interior.add(tlBase);
+
+var tlShade = new THREE.Mesh(
+  new THREE.ConeGeometry(0.22, 0.28, 12, 1, true),
+  new THREE.MeshStandardMaterial({ color: 0x33bb66, emissive: 0x33bb66, emissiveIntensity: 0.9, transparent: true, opacity: 0.88, side: THREE.DoubleSide })
+);
+tlShade.position.set(1.5, 3.38, SHELF_Z);
+interior.add(tlShade);
+
+var tlLight = new THREE.PointLight(0x88ffaa, 4, 6);
+tlLight.position.set(1.5, 3.25, SHELF_Z);
+interior.add(tlLight);
+
+/* Owl statue */
+var owlB = cyl(0.11, 0.15, 0.34, 0xaa8840, 8);
+owlB.position.set(0.3, 3.1, SHELF_Z);
+interior.add(owlB);
+
+var owlH = new THREE.Mesh(
+  new THREE.SphereGeometry(0.12, 8, 8),
+  new THREE.MeshStandardMaterial({ color: 0xaa8840, roughness: 0.75 })
+);
+owlH.position.set(0.3, 3.32, SHELF_Z);
+interior.add(owlH);
+
+[[-0.055], [0.055]].forEach(function(d) {
+  var e = new THREE.Mesh(new THREE.ConeGeometry(0.04, 0.09, 4), new THREE.MeshStandardMaterial({ color: 0x886020 }));
+  e.position.set(0.3 + d[0], 3.44, SHELF_Z);
+  interior.add(e);
+});
+
+[[-0.04], [0.04]].forEach(function(d) {
+  var eye = new THREE.Mesh(new THREE.CircleGeometry(0.022, 8), new THREE.MeshStandardMaterial({ color: 0xffdd00, emissive: 0xffdd00, emissiveIntensity: 2 }));
+  eye.position.set(0.3 + d[0], 3.3, SHELF_Z + 0.12);
+  interior.add(eye);
+});
+
+/* The Scream */
+var sFrame = box(0.26, 0.32, 0.048, 0x401808, 0.62);
+sFrame.position.set(-0.72, 3.12, SHELF_Z);
+interior.add(sFrame);
+
+var sPaint = new THREE.Mesh(
+  new THREE.PlaneGeometry(0.19, 0.25),
+  new THREE.MeshStandardMaterial({ color: 0xee6622, emissive: 0xcc3310, emissiveIntensity: 0.7 })
+);
+sPaint.position.set(-0.72, 3.12, SHELF_Z + 0.025);
+interior.add(sPaint);
+
+var picLight = new THREE.PointLight(0xffcc80, 3, 3.5);
+picLight.position.set(-0.72, 3.5, SHELF_Z + 0.5);
+interior.add(picLight);
+
+/* ============================================================
+   GRANDFATHER CLOCK
+   ============================================================ */
+var clockGrp = new THREE.Group();
+
+var ckBody = box(0.6, 2.7, 0.42, 0x301408, 0.62);
+ckBody.position.y = 1.35;
+clockGrp.add(ckBody);
+
+var ckHood = box(0.75, 0.6, 0.48, 0x201008, 0.62);
+ckHood.position.y = 2.9;
+clockGrp.add(ckHood);
+
+var ckFace = new THREE.Mesh(
+  new THREE.CircleGeometry(0.25, 24),
+  new THREE.MeshStandardMaterial({ color: 0xeeeacc, roughness: 0.78, emissive: 0xeeeacc, emissiveIntensity: 0.25 })
+);
+ckFace.position.set(0, 2.18, 0.22);
+clockGrp.add(ckFace);
+
+for (var mi = 0; mi < 12; mi++) {
+  var ma = mi / 12 * Math.PI * 2 - Math.PI / 2;
+  var mk = box(0.025, 0.08, 0.02, 0x444444);
+  mk.position.set(Math.cos(ma) * 0.2, 2.18 + Math.sin(ma) * 0.2, 0.235);
+  clockGrp.add(mk);
+}
+
+var ckHourH = box(0.026, 0.17, 0.02, 0x333333);
+ckHourH.position.set(0, 2.26, 0.236);
+clockGrp.add(ckHourH);
+
+var ckMinH = box(0.018, 0.22, 0.02, 0x333333);
+ckMinH.position.set(0, 2.18, 0.237);
+clockGrp.add(ckMinH);
+
+var pendRod = box(0.025, 0.6, 0.025, 0xbb9920, 0.38);
+pendRod.position.set(0, 0.9, 0.16);
+clockGrp.add(pendRod);
+
+var pendBob = new THREE.Mesh(
+  new THREE.SphereGeometry(0.1, 14, 10),
+  new THREE.MeshStandardMaterial({ color: 0xddaa20, metalness: 0.72, roughness: 0.28 })
+);
+pendBob.position.set(0, 0.58, 0.16);
+clockGrp.add(pendBob);
+
+/* Portrait */
+var portFrame = box(0.58, 0.74, 0.055, 0x301408, 0.62);
+portFrame.position.set(0, 3.62, 0.22);
+portFrame.userData.isPortrait = true;
+portFrame.userData.label      = 'About the Keeper';
+clockGrp.add(portFrame);
+
+var portPaint = new THREE.Mesh(
+  new THREE.PlaneGeometry(0.44, 0.6),
+  new THREE.MeshStandardMaterial({ color: 0xd8a870, emissive: 0x886430, emissiveIntensity: 0.55 })
+);
+portPaint.position.set(0, 3.62, 0.26);
+portPaint.userData.isPortrait = true;
+portPaint.userData.label      = 'About the Keeper';
+clockGrp.add(portPaint);
+
+var portFace = new THREE.Mesh(
+  new THREE.CircleGeometry(0.1, 14),
+  new THREE.MeshStandardMaterial({ color: 0xe0b890, roughness: 0.75 })
+);
+portFace.position.set(0, 3.72, 0.261);
+clockGrp.add(portFace);
+
+var portLight = new THREE.PointLight(0xffdd99, 4, 4.5);
+portLight.position.set(0, 4.1, 0.9);
+clockGrp.add(portLight);
+
+clockGrp.position.set(2.6, 0, -RD / 2 + 0.44);
+interior.add(clockGrp);
+
+/* ============================================================
+   COUNTER
+   ============================================================ */
+var counterGrp = new THREE.Group();
+var ctTop  = box(4.0, 0.1,  1.05, 0x301408, 0.52); ctTop.position.y  = 1.05; counterGrp.add(ctTop);
+var ctBody = box(4.0, 1.0,  1.0,  0x201008, 0.78); ctBody.position.y = 0.5;  counterGrp.add(ctBody);
+var ctTrim = box(4.05, 0.075, 1.07, 0x402010, 0.62); ctTrim.position.y = 1.08; counterGrp.add(ctTrim);
+counterGrp.position.set(RW / 2 - 0.57, 0, -1.5);
+counterGrp.rotation.y = -Math.PI / 2;
+interior.add(counterGrp);
+
+/* Cash register */
+var regGrp  = new THREE.Group();
+var regBody = box(0.42, 0.35, 0.3, 0x222222, 0.32, 0.55);
+regBody.position.y = 0.175;
+regGrp.add(regBody);
+
+var regDisp = box(0.32, 0.12, 0.065, 0x0a2010, 0.32);
+regDisp.position.set(0, 0.4, 0.09);
+regGrp.add(regDisp);
+
+var dispGlow = new THREE.Mesh(
+  new THREE.PlaneGeometry(0.26, 0.08),
+  new THREE.MeshStandardMaterial({ color: 0x00ff44, emissive: 0x00ff44, emissiveIntensity: 2.5 })
+);
+dispGlow.position.set(0, 0.4, 0.135);
+regGrp.add(dispGlow);
+
+var regKeys = box(0.3, 0.055, 0.2, 0x303030, 0.52);
+regKeys.position.set(0, 0.37, -0.04);
+regGrp.add(regKeys);
+
+regGrp.position.set(RW / 2 - 0.58, 1.1, -0.8);
+regGrp.rotation.y = -Math.PI / 2;
+interior.add(regGrp);
+
+/* ============================================================
+   MAGIC BOOKSHELF
+   ============================================================ */
+var MAGIC_COLORS = [0x6622cc, 0xaa1155, 0x1155aa, 0x330a88, 0x881111, 0x115533, 0x116688, 0x441199];
+
+function randMagicColor() {
+  return MAGIC_COLORS[Math.floor(Math.random() * MAGIC_COLORS.length)];
+}
+
+var magicShelfG = new THREE.Group();
+var msFrame     = box(4.2, RH - 0.3, 0.52, 0x180a02, 0.62);
+msFrame.position.set(0, (RH - 0.3) / 2, 0);
+magicShelfG.add(msFrame);
+
+for (var mrow = 0; mrow < 5; mrow++) {
+  var mshY = 0.35 + mrow * 0.65;
+  var msh  = box(4.0, 0.068, 0.44, 0x261002, 0.62);
+  msh.position.set(0, mshY, 0.02);
+  magicShelfG.add(msh);
+
+  var mbx = -1.95;
+  while (mbx < 1.9) {
+    var mbw = 0.09 + Math.random() * 0.1;
+    var mbh = 0.38 + Math.random() * 0.28;
+    var mbc = randMagicColor();
+    var mbm = box(mbw, mbh, 0.22, mbc, 0.62);
+    mbm.position.set(mbx + mbw / 2, mshY + mbh / 2 + 0.035, 0.02);
+    mbm.material.emissive          = new THREE.Color(mbc);
+    mbm.material.emissiveIntensity = 0.35;
+    magicShelfG.add(mbm);
+    mbx += mbw + 0.013;
+  }
+}
+
+magicShelfG.position.set(RW / 2 - 0.28, 0, -1.5);
+magicShelfG.rotation.y = Math.PI / 2;
+interior.add(magicShelfG);
+
+var magicLight = new THREE.PointLight(0x9955ff, 5, 8);
+magicLight.position.set(RW / 2 - 0.6, 2.8, -1.5);
+interior.add(magicLight);
+
+/* ============================================================
+   SLEEPY CAT
+   ============================================================ */
+var catGrp   = new THREE.Group();
+var catBodyM = new THREE.Mesh(new THREE.SphereGeometry(0.22, 12, 8), new THREE.MeshStandardMaterial({ color: 0x181818, roughness: 0.88 }));
+catBodyM.scale.set(2.0, 0.62, 1.22);
+catGrp.add(catBodyM);
+
+var catHeadM = new THREE.Mesh(new THREE.SphereGeometry(0.15, 10, 8), new THREE.MeshStandardMaterial({ color: 0x181818, roughness: 0.88 }));
+catHeadM.position.set(0.28, 0.09, 0);
+catGrp.add(catHeadM);
+
+[[-0.045], [0.045]].forEach(function(d) {
+  var ear = new THREE.Mesh(new THREE.ConeGeometry(0.048, 0.09, 4), new THREE.MeshStandardMaterial({ color: 0x181818 }));
+  ear.position.set(0.28 + d[0], 0.22, 0);
+  catGrp.add(ear);
+});
+
+var tail = new THREE.Mesh(
+  new THREE.TorusGeometry(0.14, 0.03, 7, 14, Math.PI * 1.35),
+  new THREE.MeshStandardMaterial({ color: 0x181818, roughness: 0.88 })
+);
+tail.position.set(-0.12, -0.04, 0);
+tail.rotation.z = -0.5;
+catGrp.add(tail);
+
+var catNose = new THREE.Mesh(
+  new THREE.SphereGeometry(0.018, 8, 6),
+  new THREE.MeshStandardMaterial({ color: 0xff8888, emissive: 0xff8888, emissiveIntensity: 0.6 })
+);
+catNose.position.set(0.42, 0.09, 0);
+catGrp.add(catNose);
+
+catGrp.position.set(RW / 2 - 0.58, 1.14, -0.3);
+catGrp.rotation.y      = -Math.PI / 2;
+catGrp.userData.isCat  = catBodyM.userData.isCat = catHeadM.userData.isCat = true;
+catGrp.userData.label  = 'Pet the cat';
+interior.add(catGrp);
+
+/* ============================================================
+   FRONT WINDOW (interior view)
+   ============================================================ */
+var fwShelf = box(3.4, 0.1, 0.72, 0x301408, 0.72);
+fwShelf.position.set(0.8, 1.38, RD / 2 - 0.65);
+interior.add(fwShelf);
+
+var iGuitar = new THREE.Mesh(
+  new THREE.SphereGeometry(0.21, 12, 10),
+  new THREE.MeshStandardMaterial({ color: 0xa04020, roughness: 0.48 })
+);
+iGuitar.scale.set(1, 1.68, 0.36);
+iGuitar.position.set(2.1, 1.66, RD / 2 - 0.65);
+iGuitar.userData.isGuitar = true;
+iGuitar.userData.label    = 'Jukebox';
+interior.add(iGuitar);
+
+var iGNeck = box(0.068, 0.65, 0.06, 0x602010, 0.62);
+iGNeck.position.set(2.1, 2.16, RD / 2 - 0.65);
+interior.add(iGNeck);
+
+var iCamera = box(0.34, 0.25, 0.22, 0x382010, 0.48);
+iCamera.position.set(0.65, 1.57, RD / 2 - 0.65);
+iCamera.userData.isWindowCam = true;
+iCamera.userData.label       = 'Photo Album';
+interior.add(iCamera);
+
+var iLens = cyl(0.068, 0.068, 0.16, 0x181818, 16);
+iLens.rotation.z = Math.PI / 2;
+iLens.position.set(0.83, 1.57, RD / 2 - 0.65);
+interior.add(iLens);
+
+var iBook = box(0.5, 0.068, 0.4, 0xf8eecc, 0.62);
+iBook.position.set(-0.3, 1.46, RD / 2 - 0.65);
+interior.add(iBook);
+
+/* ============================================================
+   RAYCASTING
+   ============================================================ */
+var rayTargets = [
+  doorMesh,
+  camBodyE, gBodyE,
+  pb, pd, ph,
+  portFrame, portPaint,
+  catGrp, catBodyM, catHeadM,
+  iCamera, iGuitar
+];
+
+/* ============================================================
+   INITIAL CAMERA
+   ============================================================ */
+camera.position.copy(VIEWS.street.pos);
+controls.target.copy(VIEWS.street.look);
+applyView('street');
+
+/* ============================================================
+   NAV
+   ============================================================ */
+var btnBack   = document.getElementById('btn-back');
+var btnFwd    = document.getElementById('btn-fwd');
+var btnStreet = document.getElementById('btn-street');
+var hintEl    = document.getElementById('hint');
+
+function updateNav() {
+  if (appState === 'street') {
+    btnBack.disabled        = true;
+    btnFwd.disabled         = true;
+    btnStreet.style.display = 'none';
+  } else {
+    btnStreet.style.display = 'inline-block';
+    var idx = parseInt(appState.split('-')[1], 10);
+    btnBack.disabled = (idx === 0);
+    btnFwd.disabled  = (idx === 2);
+  }
+}
+
+function updateHint() {
+  var msgs = {
+    'street':   'Click the front door to enter Night Owl Books',
+    'inside-0': 'Back Wall  -  Click the portrait, phone, or trinkets',
+    'inside-1': 'The Counter  -  Click the sleepy cat',
+    'inside-2': 'Front Window  -  Click the guitar or camera'
+  };
+  hintEl.textContent = msgs[appState] || '';
+}
+
+btnFwd.addEventListener('click', function() {
+  var idx = parseInt(appState.split('-')[1], 10);
+  if (idx < 2) transitionTo('inside-' + (idx + 1));
+});
+
+btnBack.addEventListener('click', function() {
+  var idx = parseInt(appState.split('-')[1], 10);
+  if (idx > 0) transitionTo('inside-' + (idx - 1));
+});
+
+btnStreet.addEventListener('click', function() {
+  transitionTo('street');
+  setTimeout(function() { doorOpen = false; doorPivot.rotation.y = 0; }, 1400);
+});
+
+updateNav();
+updateHint();
+
+/* ============================================================
+   INTERACTION
+   ============================================================ */
+var doorOpen      = false;
+var catStretching = false;
+var catStretchT   = 0;
+var raycaster     = new THREE.Raycaster();
+var mouse         = new THREE.Vector2();
+var cursorLabelEl = document.getElementById('cursor-label');
+
+window.addEventListener('mousemove', function(e) {
+  mouse.x = (e.clientX / innerWidth)  *  2 - 1;
+  mouse.y = (e.clientY / innerHeight) * -2 + 1;
+  cursorLabelEl.style.left = e.clientX + 14 + 'px';
+  cursorLabelEl.style.top  = e.clientY - 10 + 'px';
+});
+
+window.addEventListener('click', function(e) {
+  if (transitioning) return;
+  mouse.x = (e.clientX / innerWidth)  *  2 - 1;
+  mouse.y = (e.clientY / innerHeight) * -2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  var hits = raycaster.intersectObjects(rayTargets, true);
+  if (!hits.length) return;
+  var o = hits[0].object;
+  if (o.userData.isDoor      && appState === 'street' && !doorOpen) { doorOpen = true; transitionTo('inside-0'); }
+  if (o.userData.isPortrait)  openOverlay('ov-about');
+  if (o.userData.isWindowCam) openOverlay('ov-photos');
+  if (o.userData.isGuitar)    openOverlay('ov-music');
+  if (o.userData.isPhone)     openOverlay('ov-contact');
+  if (o.userData.isCat && !catStretching) { catStretching = true; catStretchT = 0; }
+});
+
+function checkHover() {
+  raycaster.setFromCamera(mouse, camera);
+  var hits = raycaster.intersectObjects(rayTargets, true);
+  if (hits.length && hits[0].object.userData.label) {
+    cursorLabelEl.style.display = 'block';
+    cursorLabelEl.textContent   = hits[0].object.userData.label;
+    document.body.style.cursor  = 'pointer';
+  } else {
+    cursorLabelEl.style.display = 'none';
+    document.body.style.cursor  = 'default';
+  }
+}
+
+/* ============================================================
+   OVERLAYS
+   ============================================================ */
+window.openOverlay  = function(id) { document.getElementById(id).classList.add('active'); };
+window.closeOverlay = function(id) { document.getElementById(id).classList.remove('active'); };
+
+/* ============================================================
+   MUSIC GAME
+   ============================================================ */
+var SECRET = 'ADFCE';
+var played = '';
+
+window.pressNote = function(n) {
+  played += n;
+  document.getElementById('music-display').textContent = played.split('').join(' - ');
+  document.querySelectorAll('.music-key').forEach(function(k) {
+    if (k.textContent === n) {
+      k.classList.add('active');
+      setTimeout(function() { k.classList.remove('active'); }, 280);
+    }
+  });
+  if (played.slice(-5) === SECRET) {
+    document.getElementById('music-msg').textContent = 'You unlocked the Night Owl melody!';
+    document.getElementById('music-msg').style.color = '#e8c97a';
+  } else if (played.length > 14) {
+    played = '';
+    document.getElementById('music-display').textContent = '';
+    document.getElementById('music-msg').textContent     = 'Try again: A - D - F - C - E';
+    document.getElementById('music-msg').style.color     = '#9b8560';
+  }
+};
+
+/* ============================================================
+   ANIMATION LOOP
+   ============================================================ */
+var clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  var t = clock.getElapsedTime();
+
+  /* Lamp flicker */
+  lampLights.forEach(function(l, i) {
+    l.intensity = 10 + Math.sin(t * 4.5 + i * 2.1) * 1.5 + Math.random() * 0.5;
+  });
+  signLight1.intensity = 6 + Math.sin(t * 1.7) * 1.2;
+  signLight2.intensity = 6 + Math.sin(t * 1.7 + 1) * 1.2;
+  shopGlow1.intensity  = 10 + Math.sin(t * 0.9) * 1.5;
+  shopGlow2.intensity  =  7 + Math.sin(t * 0.7) * 1.0;
+
+  /* Tree sway */
+  trees.forEach(function(tr, i) {
+    tr.rotation.z = Math.sin(t * 0.32 + i * 1.2) * 0.015;
+  });
+
+  /* Door swing */
+  if (doorOpen && doorPivot.rotation.y < Math.PI / 2.08) {
+    doorPivot.rotation.y = Math.min(doorPivot.rotation.y + 0.024, Math.PI / 2.08);
+  }
+
+  /* Clock hands + pendulum */
+  ckHourH.rotation.z = -t * 0.008;
+  ckMinH.rotation.z  = -t * 0.048;
+  pendRod.rotation.z = Math.sin(t * 1.85) * 0.2;
+  pendBob.rotation.z = Math.sin(t * 1.85) * 0.2;
+
+  /* Cat stretch */
+  if (catStretching) {
+    catStretchT       += 0.03;
+    catGrp.scale.x     = 1 + Math.sin(catStretchT) * 0.55;
+    catGrp.scale.z     = 1 + Math.sin(catStretchT * 0.65) * 0.28;
+    catGrp.position.y  = 1.14 + Math.sin(catStretchT * 0.48) * 0.09;
+    if (catStretchT > Math.PI * 1.7) {
+      catStretching     = false;
+      catGrp.scale.set(1, 1, 1);
+      catGrp.position.y = 1.14;
+    }
+  }
+
+  /* Tiffany lamp pulse */
+  tlLight.intensity = 4 + Math.sin(t * 2.3) * 0.8;
+
+  /* Camera transition */
+  if (camTargetPos) {
+    camera.position.lerp(camTargetPos,  0.046);
+    controls.target.lerp(camTargetLook, 0.046);
+    if (camera.position.distanceTo(camTargetPos) < 0.09) {
+      camera.position.copy(camTargetPos);
+      controls.target.copy(camTargetLook);
+      camTargetPos  = null;
+      camTargetLook = null;
+      if (onArrival) { onArrival(); onArrival = null; }
+    }
+  }
+
+  /* Gentle street drift */
+  if (appState === 'street' && !transitioning) {
+    camera.position.x = Math.sin(t * 0.055) * 0.5;
+  }
+
+  checkHover();
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+animate();
+
+window.addEventListener('resize', function() {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+</script>
+</body>
+</html>

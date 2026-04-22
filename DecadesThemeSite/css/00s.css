@@ -1,0 +1,36 @@
+body {
+    background-color: white; /* White background */
+    color: grey; /* Grey text */
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-top: 50px;
+}
+
+button {
+    background-color: grey; /* Grey buttons */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    margin: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #A9A9A9;;
+}
+
+a {
+    text-decoration: none;
+    color: #A9A9A9;;
+}
+
+a:hover {
+    text-decoration: underline;
+}

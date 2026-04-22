@@ -1,0 +1,40 @@
+body {
+    background-color: black; /* Black background */
+    color: white; /* White text */
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-top: 20%;
+}
+
+button {
+    background-color: white; /* White buttons */
+    color: black; /* Black text */
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    margin-top: 20px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

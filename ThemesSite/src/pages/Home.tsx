@@ -1,7 +1,19 @@
+import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import type { Project } from "../types/Project";
 // import '../styles/Home.css';
 
 function Home() {
+
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    // Fetch project data from the JSON file
+    fetch("../public/projects.json")
+      .then((response) => response.json())
+      .then((data) => setProjects(data));
+  }, []);
+
   return (
     <div className="home-container">
       <div className="decorative-stars">
@@ -14,6 +26,7 @@ function Home() {
       <div className="home-grid">
         {/* Hero Section */}
         <div className="hero-section">
+          <div className='window-bar'></div>
           <h1 className="hero-title">TEXT</h1>
           <p className="hero-subtitle">MORE TEST</p>
           <p className="hero-description">
@@ -44,20 +57,11 @@ function Home() {
         <div className="projects-section">
           <h2 className="section-title">PROJECTS</h2>
           <div className="projects-grid">
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="project-card">
-                <div className="project-placeholder" />
-                <p className="project-label">CASE STUDY {num}</p>
-              </div>
-            ))}
-            <div className="project-card">
-              <div className="project-placeholder" />
-              <p className="project-label">TODO TERRARIUM</p>
-            </div>
-            <div className="project-card">
-              <div className="project-placeholder" />
-              <p className="project-label">PACMAN</p>
-            </div>
+          {projects.map((project) => (
+          <li key={project.id}>
+            <Link to={`/projects/${project.id}`}>{project.title}</Link>
+          </li>
+        ))}
           </div>
           <Link to="/projects" className="btn btn-more">MORE</Link>
         </div>

@@ -1,8 +1,14 @@
-@import './assets/styles/Kawaii/Kawaii.css';
+/* style.css */
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+@import './assets/styles/Kawaii/Global-Kawaii.css';
 @import './assets/styles/Kawaii/Nav.css';
 @import './assets/styles/Kawaii/Button.css';
 @import './assets/styles/Kawaii/Section.css';
 @import './assets/styles/Kawaii/ProjectList.css';
+@import './assets/styles/Kawaii/About.css';
+@import './assets/styles/Kawaii/Responsive.css';
+
 
 
 * {
@@ -15,8 +21,16 @@
   width: 100%;
 }
 
+@font-face {
+  font-family: 'ArcadeClassic';
+  src: url('./assets/fonts/ARCADECLASSIC.TTF') format('tiff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Improves performance by showing fallback text first */
+}
+
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'ArcadeClassic', sans-serif;
   /* background: linear-gradient(135deg, #E8B4E8 0%, #D4A5E8 50%, #C0B0E8 100%); */
   background-image: url('assets/imgs/Background.svg');
   background-repeat: no-repeat;
@@ -25,4 +39,3 @@ body {
   background-size: cover;
   min-height: 100vh;
 }
-

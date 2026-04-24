@@ -8,7 +8,8 @@ interface ProjectListProps {
 const ProjectList = ({ projects }: ProjectListProps) => (
   <ul className="projects-grid">
     {projects.map((project) => (
-      <li key={project.id}>
+      <li key={project.id} className='project-item'>
+        <i className="fa-solid fa-folder-open project-folder fa-2xl"></i>
         <Link to={`/projects/${project.id}`}>{project.title}</Link>
       </li>
     ))}

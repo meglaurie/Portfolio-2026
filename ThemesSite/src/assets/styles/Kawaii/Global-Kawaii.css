@@ -1,0 +1,45 @@
+.home-container {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  
+  /* .home-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    grid-template-rows: auto auto;
+  } */
+  
+  .hero-title {
+    font-size: 48px;
+    color: #666;
+    font-weight: bold;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .hero-subtitle {
+    font-size: 24px;
+    color: #666;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+  }
+  
+  .hero-description {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.6;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+  }
+  
+  
+  
+  
+  
+  
+  

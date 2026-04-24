@@ -3,6 +3,26 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     margin-bottom: 20px;
+    list-style: none;
+  }
+
+  .project-item{
+    /* padding-top: 24px; */
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+   
+  }
+
+  .project-folder{
+    /* width: 50px;
+    height: 50px; */
+    margin: 16px;
+    color: #D4A5E8;
+    display: block;
+    align-items: center;
   }
   
   .project-card {

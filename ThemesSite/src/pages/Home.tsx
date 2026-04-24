@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import type { Project } from "../types/Project";
-import SocialIcon from "../components/SocialIcon";
 import Section from "../components/Section";
 import Button from "../components/Button";
 import ProjectList from "../components/ProjectList";
@@ -25,22 +24,20 @@ function Home() {
             LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA, UT ENIM AD MINIM VENIAM.
           </p>
           <div className="social-icons">
-            <SocialIcon href="#" icon={['fab', 'github-alt']} />
-            <SocialIcon href="#" icon={['fab', 'twitter']} />
-            <SocialIcon href="#" icon={['fab', 'linkedin']} />
+          <i className="fa-brands fa-linkedin fa-2xl"></i>
+          <i className="fa-brands fa-github-alt fa-2xl"></i>
+          <i className="fa-solid fa-envelope fa-2xl"></i>
           </div>
-          </Section>
+        </Section>
 
-        {/* Projects Section */}
-        <Section title="PROJECTS">
+        {/* <Section title="PROJECTS">
           <ProjectList projects={projects} />
           <Button to="/projects" label="MORE" />
         </Section>
 
-        {/* About Section */}
         <Section title="ABOUT">
           <Button to="/about" label="ABOUT ME" />
-        </Section>
+        </Section> */}
       </div>
     </div>
   );

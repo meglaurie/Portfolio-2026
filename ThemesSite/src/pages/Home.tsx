@@ -19,8 +19,8 @@ function Home() {
       <div className="home-grid">
         {/* Hero Section */}
         <Section title="HERO">
-          <h1 className="hero-title">TEXT</h1>
-          <p className="hero-subtitle">MORE TEST</p>
+          <h1 className="hero-title">Megan Laurie</h1>
+          <p className="hero-subtitle">UX/UI Designer + Fontend Developer </p>
           <p className="hero-description">
             LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA, UT ENIM AD MINIM VENIAM.
           </p>

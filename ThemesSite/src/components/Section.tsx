@@ -8,7 +8,9 @@ interface SectionProps {
       <div className="window-bar">
         {title ? <h2 className="section-title">{title}</h2> : null}
       </div>
-      {children}
+      <div className="section-content">
+        {children}
+      </div>
     </div>
   );
   

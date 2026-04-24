@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Project } from "../types/Project";
+import Section from "../components/Section";
 
 const Projects: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -30,21 +31,21 @@ const Projects: React.FC = () => {
   ];
 
   return (
-    <div className="page-container">
-      <h1>{project.title}</h1>
-      <p>{project.background}</p>
-      <p>{project.role}</p>
-      <p>{project.design}</p>
-      <p>{project.challenges}</p>
-      <p>{project.impact}</p>
-      <div className="images-container">
-        {imageUrls
-          .filter((url) => url && url.trim() !== null ) // Filter out empty strings
-          .map((url, index) => (
-            <img key={index} src={url} alt={`${project.id} - Image ${index + 1}`} />
-          ))}
-      </div>
+    <Section title={null}>
+    <h2>{project.title}</h2>
+    <p>{project.background}</p>
+    <p>{project.role}</p>
+    <p>{project.design}</p>
+    <p>{project.challenges}</p>
+    <p>{project.impact}</p>
+    <div className="images-container">
+      {imageUrls
+        .filter((url) => url && url.trim() !== null) // Filter out empty strings
+        .map((url, index) => (
+          <img key={index} src={url} alt={`${project.id} - Image ${index + 1}`} />
+        ))}
     </div>
+  </Section>
   );
 };
 

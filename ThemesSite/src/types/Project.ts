@@ -1,6 +1,6 @@
 export interface Project {
     id: string;
-    title: string;
+    title: string | null;
     background: string;
     role: string;
     design: string;

@@ -1,4 +1,8 @@
-@import './assets/styles/Kawaii.css';
+@import './assets/styles/Kawaii/Kawaii.css';
+@import './assets/styles/Kawaii/Nav.css';
+@import './assets/styles/Kawaii/Button.css';
+@import './assets/styles/Kawaii/Section.css';
+@import './assets/styles/Kawaii/ProjectList.css';
 
 
 * {
@@ -7,10 +11,14 @@
   box-sizing: border-box;
 }
 
+#app {
+  width: 100%;
+}
+
 body {
   font-family: 'Arial', sans-serif;
   /* background: linear-gradient(135deg, #E8B4E8 0%, #D4A5E8 50%, #C0B0E8 100%); */
-  background-image: url('assets/Background.png');
+  background-image: url('assets/imgs/Background.svg');
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;

@@ -51,7 +51,6 @@
   .project-container{
     display: flex;
     gap: 20px;
-
   }
 
   .section-left{
@@ -66,5 +65,9 @@
     .section-left{
       border-right: solid 2px #f2f2f2;
     }
+  }
+
+  .projects-page-container{
+    width: 80%;
   }
   

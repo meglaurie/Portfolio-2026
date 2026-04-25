@@ -28,11 +28,8 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="app-background" />
         <Nav/>
-        <div className="app-container">
-          <AnimatedRoutes />
-        </div>
+        <AnimatedRoutes />
       </Router>
     </ThemeProvider>
   );

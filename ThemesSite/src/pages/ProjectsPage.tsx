@@ -16,10 +16,12 @@ fetch("../public/projects.json")
 }, []);
 
   return (
-    <Section title="PROJECTS">
-        <ProjectList projects={projects} />
-        <LinkButton to="/projects" label="MORE" />
-    </Section>
+    <div className="projects-page-container">
+        <Section title="PROJECTS">
+            <ProjectList projects={projects} />
+            <LinkButton to="/projects" label="MORE" />
+        </Section>
+    </div>
   );
 }
 

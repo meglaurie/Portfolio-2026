@@ -1,11 +1,22 @@
 .nav-container {
+    display: flex;
     background-color: #D4A5E8;
+    opacity: 0.85;
     height: 3em;
-    padding: 20px;
+    padding-top: 10px;
     border-bottom: 3px solid #1E1E1E;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   }
-  
+  .nav-section-right{
+    width: 49%;
+  }
+
+  .nav-section-left{
+    width: 49%;
+    text-align: right;
+  }
+
+
   .nav-labels {
     display: flex;
     gap: 30px;
@@ -14,10 +25,12 @@
   }
   
   .nav-link {
+    display: inline;
     text-decoration: none;
-    color: #666;
+    color: #f1f1f1;
+    padding-right: 16px;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 24px;
     transition: color 0.3s ease;
   }
   

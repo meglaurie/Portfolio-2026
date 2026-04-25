@@ -3,7 +3,7 @@ interface SectionTitleProps {
   }
   
   const SectionTitle = ({ title }: SectionTitleProps) => (
-    <div className="Title-styles">
+    <div className="title-styles">
       <h2>{title}</h2>
     </div>
   );

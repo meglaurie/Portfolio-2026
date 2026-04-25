@@ -32,26 +32,34 @@ const Projects: React.FC = () => {
   ];
 
   return (
-    <Section title={null}>
-      <div className="about-left"></div>
-      <div className="about-right">
-        <h2>{project.title}</h2>
-        <SectionTitle title = {'Project Background'}></SectionTitle>
-        <p>{project.background}</p>
-        <SectionTitle title = {'My Role'}></SectionTitle>
-        <p>{project.role}</p>
-        <SectionTitle title = {'Design Process'}></SectionTitle>
-        <p>{project.design}</p>
-        <SectionTitle title = {'Challenges and Solutions'}></SectionTitle>
-        <p>{project.challenges}</p>
-        <SectionTitle title = {'Outcomes and Impact'}></SectionTitle>
-        <p>{project.impact}</p>
-        <div className="images-container">
-          {imageUrls
-            .filter((url) => url && url.trim() !== null) // Filter out empty strings
-            .map((url, index) => (
-              <img key={index} src={url} alt={`${project.id} - Image ${index + 1}`} />
-            ))}
+    <Section title={null} >
+      <div className="project-container">
+        <div className="section-left">
+          <SectionTitle title = {'Project Background'}></SectionTitle>
+          <SectionTitle title = {'My Role'}></SectionTitle>
+          <SectionTitle title = {'Design Process'}></SectionTitle>
+          <SectionTitle title = {'Challenges and Solutions'}></SectionTitle>
+          <a href="#project-impact"><SectionTitle title = {'Outcomes and Impact'}></SectionTitle></a>
+        </div>
+        <div className="section-right">
+          <h1 id="project title">{project.title}</h1>
+          <SectionTitle title = {'Project Background'}></SectionTitle>
+          <p>{project.background}</p>
+          <SectionTitle title = {'My Role'}></SectionTitle>
+          <p>{project.role}</p>
+          <SectionTitle title = {'Design Process'}></SectionTitle>
+          <p>{project.design}</p>
+          <SectionTitle title = {'Challenges and Solutions'}></SectionTitle>
+          <p>{project.challenges}</p>
+          <SectionTitle title = {'Outcomes and Impact'}></SectionTitle>
+          <p id="project-impact">{project.impact}</p>
+          <div className="images-container">
+            {imageUrls
+              .filter((url) => url && url.trim() !== null) // Filter out empty strings
+              .map((url, index) => (
+                <img key={index} src={url} alt={`${project.id} - Image ${index + 1}`} />
+              ))}
+          </div>
         </div>
       </div>
   </Section>

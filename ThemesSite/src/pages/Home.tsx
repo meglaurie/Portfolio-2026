@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import type { Project } from "../types/Project";
+// import { useEffect, useState } from "react";
+// import type { Project } from "../types/Project";
 import Section from "../components/Section";
-import Button from "../components/Button";
-import ProjectList from "../components/ProjectList";
+// import Button from "../components/Button";
+// import ProjectList from "../components/ProjectList";
 
 function Home() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  // const [projects, setProjects] = useState<Project[]>([]);
 
-  useEffect(() => {
-    fetch("../public/projects.json")
-      .then((response) => response.json())
-      .then((data) => setProjects(data));
-  }, []);
+  // useEffect(() => {
+  //   fetch("../public/projects.json")
+  //     .then((response) => response.json())
+  //     .then((data) => setProjects(data));
+  // }, []);
 
   return (
     <div className="home-container">

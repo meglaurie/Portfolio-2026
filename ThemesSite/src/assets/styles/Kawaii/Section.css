@@ -1,8 +1,14 @@
 .section{
     background: white;
-    border: 3px solid #1E1E1E;
+    position: relative;
+    border: 3px solid hsl(0, 0%, 12%);
     border-radius: 20px;
     padding: 0px;
+    margin: 50px;
+    /* max-height: 80vh; */
+    overflow-x: hidden;
+    scrollbar-color: #D4A5E8 #97ACFA;
+    scrollbar-width: thin;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   }
 
@@ -25,12 +31,15 @@
   }
 
   .window-bar{
+    position: sticky;
     background-color: #D4A5E8;
     height: 2em;
     width: 100%;
     padding: 4px;
     padding-left: 16px;
     top: 0;
+    left:0;
+    right:0;
     border-bottom: 2px solid #1e1e1e;
     border-radius: 16px 16px 0 0;
     z-index: 99;

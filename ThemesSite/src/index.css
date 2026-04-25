@@ -33,12 +33,55 @@ body {
   font-family: 'ArcadeClassic', sans-serif;
   /* background: linear-gradient(135deg, #E8B4E8 0%, #D4A5E8 50%, #C0B0E8 100%); */
   min-height: 100vh;
+  transition: background-image 0.3s ease, color 0.3s ease;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
+/* .light{
+  .app-background{
+    width: 100%;
+    min-height: 100vh;
+    background-image: url('assets/imgs/Background.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 100vh;
+    position: fixed;
+    inset: 0;             
+    z-index: 0;
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease;
+  }
+} */
+
+/* .dark{
+  .app-background{
+    width: 100%;
+    min-height: 100vh;
+    background-image: url('assets/imgs/Pink-Background.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: black;
+    position: fixed;
+    inset: 0;            
+    z-index: 0;
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease;
+  }
+} */
+
+/* .app-container {
+  position: relative;
+  overflow-x: hidden;
+  z-index: 1;          
+} */
+
+/* Make sure your page components have a transparent background */
+/* .page {
+  background: transparent;
+} */
 
 body.light {
   background-image: url('assets/imgs/Background.svg');
@@ -55,8 +98,6 @@ body.dark {
   background-position: center center;
   background-attachment: fixed;
   background-size: cover;
-  /* --background-color: #121212;
-  --text-color: #ffffff; */
   background-color: black;
   min-height: 100vh;
 }
@@ -70,7 +111,7 @@ body.dark {
 } */
 
 .theme-toggle {
-  /* position: fixed; */
+  position: fixed;
   top: 10px;
   right: 10px;
   padding: 10px 20px;

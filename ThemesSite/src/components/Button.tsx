@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom";
+
 
 interface ButtonProps {
-  to: string;
+  OnClick: () => void;
   label: string;
 }
 
-const Button = ({ to, label }: ButtonProps) => (
-  <Link to={to} className="btn">
+const Button = ({ OnClick, label }: ButtonProps) => (
+  <button onClick={OnClick} className="btn">
     {label}
-  </Link>
+  </button>
 );
 
 export default Button; 

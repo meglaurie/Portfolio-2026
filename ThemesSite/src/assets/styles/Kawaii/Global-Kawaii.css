@@ -41,18 +41,9 @@
     margin: 24px 0px 24px 0px;
   }
   
-  .project-container{
+  .flex-container{
     display: flex;
     gap: 20px;
 
   }
-
-  .section-left{
-    width:23%;
-    border-right: solid 2px #1E1E1E;
-  }
-  .section-right{
-    width:74%;
-  }
-  
   

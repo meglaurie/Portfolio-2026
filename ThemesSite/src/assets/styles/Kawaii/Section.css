@@ -10,6 +10,7 @@
     scrollbar-color: #D4A5E8 #97ACFA;
     scrollbar-width: thin;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: background-color, 0.3s ease, color 0.3s ease;
   }
 
  .section-content{
@@ -40,7 +41,21 @@
     top: 0;
     left:0;
     right:0;
-    border-bottom: 2px solid #1e1e1e;
+    border-bottom: 3px solid #1e1e1e;
     border-radius: 16px 16px 0 0;
     z-index: 99;
+  }
+
+
+  .dark{
+    .section{
+      background-color: black;
+      color: white;
+      border: 3px solid #f2f2f2;
+      transition: background-color, 0.3s ease, color 0.3s ease;
+    }
+    .window-bar{
+      background-color: #38084d;
+      border-bottom: 2px solid #f2f2f2;
+    }
   }

@@ -47,3 +47,24 @@
     text-align: center;
     letter-spacing: 0.5px;
   }
+
+  .project-container{
+    display: flex;
+    gap: 20px;
+
+  }
+
+  .section-left{
+    width:23%;
+    border-right: solid 2px #1E1E1E;
+  }
+  .section-right{
+    width:74%;
+  }
+
+  .dark{
+    .section-left{
+      border-right: solid 2px #f2f2f2;
+    }
+  }
+  

@@ -1,23 +1,38 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from "./context/ThemeContext";
+import { AnimatePresence } from 'framer-motion';
 import Home from './pages/Home';
 import About from './pages/About';
+import PageTransition from './components/PageTransition';
 import Projects from './pages/Projects';
 import ProjectsPage from './pages/ProjectsPage';
 import Nav from './components/Nav';
 import './App.css';
 
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="sync">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+        <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+        <Route path="/projects/" element={<PageTransition><ProjectsPage /></PageTransition>} />
+        <Route path="/projects/:id" element={<PageTransition><Projects /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
 function App() {
   return (
     <ThemeProvider>
       <Router>
+        <div className="app-background" />
         <Nav/>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/projects/" element={<ProjectsPage />} />
-          <Route path="/projects/:id" element={<Projects />} />
-        </Routes>
+        <div className="app-container">
+          <AnimatedRoutes />
+        </div>
       </Router>
     </ThemeProvider>
   );

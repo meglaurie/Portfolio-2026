@@ -1,13 +1,12 @@
 .section{
-    background: #f1f1f1;
-    opacity: 0.85;
+    background:rgba(241,241,241,0.85); 
     position: relative;
     border: 3px solid hsl(0, 0%, 12%);
     border-radius: 20px;
     padding: 0px;
     margin: 50px;
-    /* max-height: 80vh; */
     overflow-x: hidden;
+    overflow-y: auto;
     scrollbar-color: #D4A5E8 #97ACFA;
     scrollbar-width: thin;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -20,7 +19,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
  }
 
   .section-title {

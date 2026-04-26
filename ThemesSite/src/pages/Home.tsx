@@ -3,7 +3,6 @@
 import Section from "../components/Section";
 // import Button from "../components/Button";
 // import ProjectList from "../components/ProjectList";
-import Background from "../components/Background";
 
 
 function Home() {
@@ -18,7 +17,6 @@ function Home() {
   return (
     <div className="home-container">
       <div className="home-grid">
-      {/* <Background /> */}
         {/* Hero Section */}
         <Section title="HERO">
           <h1 className="hero-title">Megan Laurie</h1>

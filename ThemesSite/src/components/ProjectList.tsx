@@ -10,7 +10,7 @@ const ProjectList = ({ projects }: ProjectListProps) => (
     {projects.map((project) => (
       <li key={project.id} className='project-item'>
         <i className="fa-solid fa-folder-open project-folder fa-2xl"></i>
-        <Link to={`/projects/${project.id}`}>{project.title}</Link>
+        <Link className='project-link'to={`/projects/${project.id}`}>{project.title}</Link>
       </li>
     ))}
   </ul>

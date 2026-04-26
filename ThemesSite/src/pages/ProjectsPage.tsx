@@ -19,7 +19,7 @@ fetch("../public/projects.json")
     <div className="projects-page-container">
         <Section title="PROJECTS">
             <ProjectList projects={projects} />
-            <LinkButton to="/projects" label="MORE" />
+            {/* <LinkButton to="/projects" label="MORE" /> */}
         </Section>
     </div>
   );

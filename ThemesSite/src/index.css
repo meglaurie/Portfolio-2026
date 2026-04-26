@@ -34,54 +34,49 @@ body {
   transition: background-image 0.3s ease, color 0.3s ease;
 }
 
-/* .light{
+.app-background{
+  width: 100%;
+  min-height: 100vh;
+  position: fixed;
+  inset: 0;             
+  z-index: 0;
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease;
+}
+
+.light{
   .app-background{
-    width: 100%;
-    min-height: 100vh;
     background-image: url('assets/imgs/Background.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
     background-size: cover;
-    min-height: 100vh;
-    position: fixed;
-    inset: 0;             
-    z-index: 0;
-    background-color: var(--bg-color);
-    transition: background-color 0.3s ease;
   }
-} */
+}
 
-/* .dark{
+.dark{
   .app-background{
-    width: 100%;
-    min-height: 100vh;
-    background-image: url('assets/imgs/Pink-Background.png');
+    background-image: url('assets/imgs/Dark-Background.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
     background-size: cover;
     background-color: black;
-    position: fixed;
-    inset: 0;            
-    z-index: 0;
-    background-color: var(--bg-color);
-    transition: background-color 0.3s ease;
   }
-} */
+}
 
-/* .app-container {
+.app-container {
   position: relative;
   overflow-x: hidden;
   z-index: 1;          
-} */
+}
 
 /* Make sure your page components have a transparent background */
 /* .page {
   background: transparent;
 } */
 
-body.light {
+/* body.light {
   background-image: url('assets/imgs/Background.svg');
   background-repeat: no-repeat;
   background-position: center center;
@@ -98,7 +93,7 @@ body.dark {
   background-size: cover;
   background-color: black;
   min-height: 100vh;
-}
+} */
 
 .theme-toggle {
   position: fixed;

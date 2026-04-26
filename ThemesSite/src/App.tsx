@@ -7,6 +7,7 @@ import PageTransition from './components/PageTransition';
 import Projects from './pages/Projects';
 import ProjectsPage from './pages/ProjectsPage';
 import Nav from './components/Nav';
+import Background from './components/Background';
 import './App.css';
 
 function AnimatedRoutes() {
@@ -28,6 +29,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
+        <Background />
         <Nav/>
         <AnimatedRoutes />
       </Router>

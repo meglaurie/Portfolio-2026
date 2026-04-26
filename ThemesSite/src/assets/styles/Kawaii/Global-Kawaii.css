@@ -96,13 +96,13 @@
   
   .star-1 {
     left: 5%;
-    top: 0;
+    top: 20px;
     animation-delay: 0s;
   }
   
   .star-2 {
     right: 15%;
-    top: 10px;
+    top: 60px;
     font-size: 50px;
   }
   

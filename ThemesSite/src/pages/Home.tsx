@@ -3,14 +3,10 @@
 import Section from "../components/Section";
 // import Button from "../components/Button";
 // import ProjectList from "../components/ProjectList";
-import starSvg from '../assets/imgs/Star.svg';
-import moonSvg from '../assets/imgs/moon.svg';
-import flatCloudSvg from '../assets/imgs/FlatCloud.svg';
-import roundCloudSvg from '../assets/imgs/RoundCloud.svg';
-import { useTheme } from '../context/ThemeContext';
+import Background from "../components/Background";
+
 
 function Home() {
-  const { theme } = useTheme();
   // const [projects, setProjects] = useState<Project[]>([]);
 
   // useEffect(() => {
@@ -22,29 +18,7 @@ function Home() {
   return (
     <div className="home-container">
       <div className="home-grid">
-      <div className="decorative-stars">
-      {theme === "dark" ? (
-        <>
-          <img src={starSvg} alt="" className="star star-1"/>
-          <img src={moonSvg} alt="" className="star star-2"/>
-          <img src={starSvg} alt="" className="star star-3"/>
-          <img src={starSvg} alt="" className="star star-4"/>
-          <img src={starSvg} alt="" className="star star-5"/>
-          <img src={starSvg} alt="" className="star star-6"/>
-          <img src={starSvg} alt="" className="star star-7"/>
-        </>
-      ) : (
-        <>
-          <img src={flatCloudSvg} alt="" className="star star-1"/>
-          <img src={roundCloudSvg} alt="" className="star star-2"/>
-          <img src={flatCloudSvg} alt="" className="star star-3"/>
-          <img src={roundCloudSvg} alt="" className="star star-4"/>
-          <img src={flatCloudSvg} alt="" className="star star-5"/>
-          <img src={roundCloudSvg} alt="" className="star star-6"/>
-          <img src={flatCloudSvg} alt="" className="star star-7"/>
-        </>
-      )}
-      </div>
+      {/* <Background /> */}
         {/* Hero Section */}
         <Section title="HERO">
           <h1 className="hero-title">Megan Laurie</h1>

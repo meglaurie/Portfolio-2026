@@ -26,6 +26,7 @@
   
   .nav-link {
     display: inline;
+    font-family: 'ArcadeClassic';
     text-decoration: none;
     color: #f1f1f1;
     padding-right: 16px;

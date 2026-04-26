@@ -9,8 +9,6 @@
 @import './assets/styles/Kawaii/About.css';
 @import './assets/styles/Kawaii/Responsive.css';
 
-
-
 * {
   margin: 0;
   padding: 0;
@@ -30,7 +28,7 @@
 }
 
 body {
-  font-family: 'ArcadeClassic', sans-serif;
+  font-family: 'Ariel', sans-serif;
   /* background: linear-gradient(135deg, #E8B4E8 0%, #D4A5E8 50%, #C0B0E8 100%); */
   min-height: 100vh;
   transition: background-image 0.3s ease, color 0.3s ease;
@@ -93,7 +91,7 @@ body.light {
 }
 
 body.dark {
-  background-image: url('assets/imgs/Pink-Background.png');
+  background-image: url('assets/imgs/Dark-Background.svg');
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
@@ -101,14 +99,6 @@ body.dark {
   background-color: black;
   min-height: 100vh;
 }
-
-/* body, .light, .dark {
-  background-image: url('assets/imgs/Background.svg');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  background-size: cover;
-} */
 
 .theme-toggle {
   position: fixed;

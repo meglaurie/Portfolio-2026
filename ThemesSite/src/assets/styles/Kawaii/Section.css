@@ -24,6 +24,7 @@
  }
 
   .section-title {
+    font-family: 'ArcadeClassic';
     font-size: 20px;
     color: white;
     font-weight: bold;
@@ -45,6 +46,13 @@
     border-bottom: 3px solid #1e1e1e;
     border-radius: 16px 16px 0 0;
     z-index: 99;
+  }
+
+  .window-x{
+    position: absolute;
+    right: 16px;
+    top: 3px;
+    padding: 5px;
   }
 
 

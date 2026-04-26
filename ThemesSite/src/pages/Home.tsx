@@ -16,17 +16,27 @@ function Home() {
   return (
     <div className="home-container">
       <div className="home-grid">
+      <div className="decorative-stars">
+        <span className="star star-1">⭐</span>
+        <span className="star star-2">🌙</span>
+        <span className="star star-3">⭐</span>
+        <span className="star star-4">⭐</span>
+        <span className="star star-5">⭐</span>
+        <span className="star star-6">⭐</span>
+        <span className="star star-7">⭐</span>
+      </div>
+      <img src="../assets/imgs/star.svg" alt="" className="cloud-1"/>
         {/* Hero Section */}
         <Section title="HERO">
           <h1 className="hero-title">Megan Laurie</h1>
           <p className="hero-subtitle">UX/UI Designer + Fontend Developer </p>
           <p className="hero-description">
-            LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA, UT ENIM AD MINIM VENIAM.
+          Bridging Design and Development with Precision and Passion. My unique ability to connect the creative with the technical ensures that every project not only looks great but functions flawlessly. I thrive on transforming user-centric designs into smooth, interactive, and accessible digital experiences that delight users and meet business goals.
           </p>
           <div className="social-icons">
-          <i className="fa-brands fa-linkedin fa-2xl"></i>
-          <i className="fa-brands fa-github-alt fa-2xl"></i>
-          <i className="fa-solid fa-envelope fa-2xl"></i>
+            <i className="fa-brands fa-linkedin fa-2xl"></i>
+            <i className="fa-brands fa-github-alt fa-2xl"></i>
+            <i className="fa-solid fa-envelope fa-2xl"></i>
           </div>
         </Section>
 

@@ -1,12 +1,12 @@
-/* style.css */
 @import "@fortawesome/fontawesome-free/css/all.css";
 
+@import './assets/styles/Kawaii/About.css';
+@import './assets/styles/Kawaii/Background.css';
+@import './assets/styles/Kawaii/Button.css';
 @import './assets/styles/Kawaii/Global-Kawaii.css';
 @import './assets/styles/Kawaii/Nav.css';
-@import './assets/styles/Kawaii/Button.css';
-@import './assets/styles/Kawaii/Section.css';
 @import './assets/styles/Kawaii/ProjectList.css';
-@import './assets/styles/Kawaii/About.css';
+@import './assets/styles/Kawaii/Section.css';
 @import './assets/styles/Kawaii/Responsive.css';
 
 * {

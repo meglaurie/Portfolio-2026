@@ -20,10 +20,32 @@
   }
   
   .about-description {
-    font-size: 13px;
-    color: #333;
+    font-size: 16px;
+    /* color: #333;
     line-height: 1.6;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin: 20px 0;
+    letter-spacing: 0.5px; */
+    margin: 24px;
+  }
+
+  .btn-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .about-content-container{
+    margin-top: 0px;
+  }
+
+  .about-title{
+    margin-bottom: 24px;
+  }
+
+  .about-image{
+    width: 150px;
+    float: left;
+    margin: 0 20px 20px 0;    
+    border: #1e1e1e solid 3px;
   }

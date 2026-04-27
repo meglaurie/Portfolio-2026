@@ -1,6 +1,5 @@
 import Section from '../components/Section';
 import ProjectList from '../components/ProjectList';
-import LinkButton from '../components/LinkButton';
 import type { Project } from '../types/Project';
 import { useEffect, useState } from 'react';
 // import '../styles/Page.css';
@@ -16,7 +15,7 @@ fetch("../public/projects.json")
 }, []);
 
   return (
-    <div className="projects-page-container">
+    <div className="section-container">
         <Section title="PROJECTS">
             <ProjectList projects={projects} />
             {/* <LinkButton to="/projects" label="MORE" /> */}

@@ -28,7 +28,7 @@ function About() {
               If you want to chat about design, collaboration, or how much better your website could look (spoiler alert: it can), feel free to reach out! Or just grab a coffee with me and we can talk about life, design, and the inevitable robot uprising.
               Let’s create something awesome!</p>
             <div className='btn-container'>
-              <Link to="/" className="btn">Downlaod Resume</Link>
+              <Link to="/" className="btn">Download Resume</Link>
             </div>
           </div>
       </Section>

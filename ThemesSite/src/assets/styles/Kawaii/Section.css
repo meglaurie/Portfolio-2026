@@ -3,6 +3,7 @@
   position: relative;
   margin: 50px auto;
   width: fit-content;
+  /* height: 75vh; */
   max-width: 1200px;
   max-height: 85vh; /* Set a fixed height for the section */
   border: 3px solid hsl(0, 0%, 12%);
@@ -47,7 +48,7 @@
   overflow-y: auto;  /* Make content scrollable */
   overflow-x: hidden;
   flex-grow: 1; /* Ensure it fills remaining space */
-  max-height: calc(80vh - 2em); /* Make sure the content doesn't overflow the section */
+  max-height: calc(85vh - 2em); /* Make sure the content doesn't overflow the section */
   scrollbar-color:#97ACFA #D4A5E8;
 }
 
@@ -63,5 +64,74 @@
     background: rgb(30, 30, 30, 0.85);
     border: 3px solid hsl(0, 0%, 12%);
     color: #f2f2f2;
+  }
+}
+
+/* Small Tablets (600px to 768px) */
+@media (max-width: 768px) {
+  .section {
+    margin: 20px auto;
+    width: 90%; /* Reduce width for smaller screens */
+    max-height: 80vh;
+  }
+
+  .window-bar {
+    height: 2.5em; /* Make the window bar a little taller */
+    padding: 8px 12px; /* Reduce padding for smaller screens */
+  }
+
+  .section-title {
+    font-size: 18px; /* Adjust font size for smaller screens */
+    margin-bottom: 15px;
+  }
+
+  .section-content {
+    padding: 16px; /* Reduce padding */
+  }
+}
+
+/* Small Phones (Below 600px) */
+@media (max-width: 600px) {
+  .section {
+    margin: 15px auto;
+    width: 100%; /* Make the section full width on very small screens */
+    max-height: 80vh;
+  }
+
+  .window-bar {
+    height: 3em; /* Increase the window bar height for small screens */
+    padding: 10px 12px;
+  }
+
+  .section-title {
+    font-size: 16px; /* Further reduce font size for small devices */
+    margin-bottom: 10px;
+  }
+
+  .section-content {
+    padding: 10px; /* Reduce padding even more for very small screens */
+  }
+}
+
+/* Extra Small Phones (Below 400px) */
+@media (max-width: 400px) {
+  .section {
+    margin: 10px auto;
+    width: 100%; /* Make section full-width */
+    max-height: 80vh;
+  }
+
+  .window-bar {
+    height: 3.5em;
+    padding: 10px;
+  }
+
+  .section-title {
+    font-size: 14px; /* Further reduce font size */
+    margin-bottom: 8px;
+  }
+
+  .section-content {
+    padding: 8px;
   }
 }

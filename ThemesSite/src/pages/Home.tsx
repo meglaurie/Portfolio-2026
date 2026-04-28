@@ -1,18 +1,7 @@
-// import { useEffect, useState } from "react";
-// import type { Project } from "../types/Project";
 import Section from "../components/Section";
-// import Button from "../components/Button";
-// import ProjectList from "../components/ProjectList";
 
 
 function Home() {
-  // const [projects, setProjects] = useState<Project[]>([]);
-
-  // useEffect(() => {
-  //   fetch("../public/projects.json")
-  //     .then((response) => response.json())
-  //     .then((data) => setProjects(data));
-  // }, []);
 
   return (
     <div className="home-container">
@@ -30,15 +19,6 @@ function Home() {
             <i className="fa-solid fa-envelope fa-2xl"></i>
           </div>
         </Section>
-
-        {/* <Section title="PROJECTS">
-          <ProjectList projects={projects} />
-          <Button to="/projects" label="MORE" />
-        </Section>
-
-        <Section title="ABOUT">
-          <Button to="/about" label="ABOUT ME" />
-        </Section> */}
       </div>
     </div>
   );

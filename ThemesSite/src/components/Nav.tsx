@@ -28,6 +28,15 @@ import { useTheme } from "../context/ThemeContext";
 function Nav() {
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const closeMenu = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, 600); // match the animation duration
+  };
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto"; // Prevent scrolling when the menu is open
@@ -37,7 +46,7 @@ function Nav() {
     <>
      {/* Overlay */}
      {isOpen && (
-        <div className="menu-overlay" onClick={() => setIsOpen(false)} />
+        <div className="menu-overlay" onClick={closeMenu} />
       )}
       <nav className="nav-container">
         <div className="nav-section-container">
@@ -62,14 +71,11 @@ function Nav() {
         </div>
 
         {/* Mobile menu */}
-        <div className={`mobile-menu ${isOpen ? "open" : ""}`}>
-          {/* Close Button */}
-          <div className="close-btn" onClick={() => setIsOpen(false)}>×</div>
-
-          {/* Menu links */}
-          <Link onClick={() => setIsOpen(false)} to="/">Home</Link>
-          <Link onClick={() => setIsOpen(false)} to="/projects">Projects</Link>
-          <Link onClick={() => setIsOpen(false)} to="/about">About</Link>
+        <div className={`mobile-menu ${isOpen ? "open" : ""} ${isClosing ? "closing" : ""}`}>
+        <div className="close-btn" onClick={closeMenu}>×</div>
+          <Link onClick={closeMenu} to="/">Home</Link>
+          <Link onClick={closeMenu} to="/projects">Projects</Link>
+          <Link onClick={closeMenu} to="/about">About</Link>
         </div>
       </nav>
     </>

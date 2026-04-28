@@ -12,7 +12,7 @@
   .nav-section-container{
     display: flex;
     background-color: #D4A5E8;
-    opacity: 0.85;
+    opacity: 0.95;
     background-color: rgba(212, 165, 232, 0.85);
     height: 3em;
     padding-top: 10px;
@@ -116,6 +116,18 @@
     animation: slideInBounce 0.6s ease forwards;
   }
 
+  @keyframes slideOutBounce {
+    0%   { left: 0; }
+    12%  { left: 2%; }
+    25%  { left: -3%; }
+    40%  { left: 5%; }
+    100% { left: -100%; }
+  }
+  
+  .mobile-menu.closing {
+    animation: slideOutBounce 0.6s ease forwards;
+  }
+
 /* Overlay */
   .menu-overlay {
     position: fixed;
@@ -171,3 +183,4 @@
       }
     }
 
+    

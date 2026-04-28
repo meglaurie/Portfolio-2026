@@ -1,16 +1,10 @@
 .home-container {
     position: relative;
-    max-width: 1400px;
     margin: 0 auto;
+    width: 800px;
     padding: 40px 20px;
   }
 
-  .section-container{
-    /* position: relative; */
-    max-width: 1400px;
-    margin: 0 auto;
-    /* padding: 40px 20px; */
-  }
   
   /* .home-grid {
     display: grid;
@@ -39,7 +33,7 @@
   }
   
   .hero-description {
-    width: 50%;
+    width: 90%;
     font-size: 1rem;
     color: #333;
     line-height: 1.6;

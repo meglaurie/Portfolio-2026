@@ -1,69 +1,67 @@
-.section{
-    background:rgba(241,241,241,0.85); 
-    position: relative;
-    height: fit-content;
-    max-height: 72.5vh;
+.section {
+  background: rgba(241, 241, 241, 0.85);
+  position: relative;
+  margin: 50px auto;
+  width: fit-content;
+  max-width: 1200px;
+  max-height: 85vh; /* Set a fixed height for the section */
+  border: 3px solid hsl(0, 0%, 12%);
+  border-radius: 20px;
+  padding: 0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: background-color, 0.3s ease, color 0.3s ease;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.window-bar {
+  background-color: #D4A5E8;
+  height: 2em;
+  width: 100%;
+  padding: 4px 16px;
+  border-bottom: 3px solid #1e1e1e;
+  border-radius: 16px 16px 0 0;
+  position: sticky; /* This will keep it fixed at the top of the container */
+  top: 0; /* Stick it to the top */
+  z-index: 2; /* Ensure it stays on top of the scrollable content */
+}
+
+.section-title {
+  font-family: 'ArcadeClassic';
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.section-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align content to the top */
+  overflow-y: auto;  /* Make content scrollable */
+  overflow-x: hidden;
+  flex-grow: 1; /* Ensure it fills remaining space */
+  max-height: calc(80vh - 2em); /* Make sure the content doesn't overflow the section */
+  scrollbar-color:#97ACFA #D4A5E8;
+}
+
+/* .section-container{
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+} */
+
+.dark {
+  .section {
+    background: rgb(30, 30, 30, 0.85);
     border: 3px solid hsl(0, 0%, 12%);
-    border-radius: 20px;
-    padding: 0px;
-    margin: 50px;
-    max-height: fit-content;
-    scrollbar-width: thin;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: background-color, 0.3s ease, color 0.3s ease;
-    z-index: 1;
+    color: #f2f2f2;
   }
-
- .section-content{
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    scrollbar-color: #D4A5E8 #97ACFA;
- }
-
-  .section-title {
-    font-family: 'ArcadeClassic';
-    font-size: 20px;
-    color: white;
-    font-weight: bold;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  }
-
-  .window-bar{
-    position: sticky;
-    background-color: #D4A5E8;
-    height: 2em;
-    width: 100%;
-    padding: 4px;
-    padding-left: 16px;
-    top: 0;
-    left:0;
-    right:0;
-    border-bottom: 3px solid #1e1e1e;
-    border-radius: 16px 16px 0 0;
-    /* z-index: 99; */
-  }
-
-  .window-x{
-    position: absolute;
-    right: 16px;
-    top: 3px;
-    padding: 5px;
-  }
-
-  .dark{
-    .section{
-      background:rgba(16, 16, 16, 0.85); 
-      color: white;
-      border: 3px solid #f2f2f2;
-      transition: background-color, 0.3s ease, color 0.3s ease;
-    }
-    .window-bar{
-      background-color: #705687;
-      border-bottom: 2px solid #f2f2f2;
-    }
-  }
+}

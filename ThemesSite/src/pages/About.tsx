@@ -5,28 +5,28 @@ import profilePhoto from '../assets/imgs/ProfilePhoto.jpg';
 function About() {
   return (
     <div className='section-container'>
-      <Section title="ABOUT ME">
-          <div>
+      <Section title=''>
+          <div className='about-content'>
             <img src={profilePhoto} alt="About Me" className="about-image" />
             <h1 className='about-title'>About Me</h1>
             <p className='about-description'>
-              Hey there! I’m Megan, a I am a UX/UI Designer, Frontend Developer and part-time superhero, full-time design enthusiast.
-              When I'm not busy making pixels behave and colors pop, you can find me [fun hobby or activity].
+              Hi there! I'm Megan, a passionate UX/UI designer, frontend developer, illustrator, and self-proclaimed pixel nerd. With over 10 years of experience, I specialize in creating intuitive, user-centered applications for both web and mobile platforms.
             </p>
             <p className='about-description'>
-            I’ve been in the design world for almost 10 years now, and my passion for creating visually stunning and user-friendly designs is what drives me every day. Whether it’s crafting a sleek website or coming up with eye-catching branding, I live and breathe design.
-              Here’s a little about my journey:
-              🎨 How I got hereFrom [previous career or academic background] to discovering my love for design, my path has been anything but ordinary. But hey, who wants ordinary, right? I officially dived into the design world when I [describe a pivotal moment, project, or decision].
-              💡 My design philosophyI believe design should be both functional and beautiful—like a perfect cup of coffee or a well-crafted meme. I strive to blend creativity with purpose, making sure everything I create not only looks great but also solves real problems.
-              🔧 Tools I useWhen it comes to design tools, I’m a [Adobe Illustrator, Figma, Sketch, etc.] enthusiast. If it’s got layers and it helps me create, I’m all in.
+              Throughout my career, I’ve had the privilege of working across a wide range of industries, including digital marketing, healthcare, semiconductor manufacturing, conference management, and AI, delivering seamless design and functionality. My expertise spans the entire product development lifecycle: from ideation and design to development and testing, ensuring a cohesive bridge between design and engineering teams.
             </p>
             <p className='about-description'>
-              🌟 Fun facts
-              I once [fun, quirky personal achievement or anecdote].
-              My spirit animal is [something random or funny].
-              I can [fun talent or skill related to your work or something offbeat].
-              If you want to chat about design, collaboration, or how much better your website could look (spoiler alert: it can), feel free to reach out! Or just grab a coffee with me and we can talk about life, design, and the inevitable robot uprising.
-              Let’s create something awesome!</p>
+              I’m proficient with design tools like Adobe Creative Suite, Figma, and Sketch, and equally comfortable building responsive, high-performance applications using React, TypeScript, Node.js, NPM, and Git. I thrive in environments where creativity and technical precision intersect, always focusing on delivering thoughtful, user-friendly solutions.
+            </p>
+            <p className='about-description'>
+              I’m based in Calgary, Alberta, nestled near the breathtaking Canadian Rockies.
+            </p>
+            <p className='about-description'>
+            Outside of work, you’ll often find me hiking through the mountains, cycling around the city, learning to longboarding, or traveling to new destinations.
+            </p>
+            <p className='about-description'>
+              I’m powered by loud music and orange pekoe tea—two essential ingredients for creativity.
+            </p>
             <div className='btn-container'>
               <Link to="/" className="btn">Download Resume</Link>
             </div>
@@ -37,3 +37,14 @@ function About() {
 }
 
 export default About;
+
+
+
+
+
+
+
+
+
+
+

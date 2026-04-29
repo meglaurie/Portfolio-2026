@@ -31,7 +31,7 @@ function About() {
               I’m powered by loud music and orange pekoe tea—two essential ingredients for creativity.
             </p>
             <div className='btn-container'>
-              <Link to="/" className="btn"><i className="fa-solid fa-download"></i>Download Resume</Link>
+              <a href="../src/assets/styles/web-resume-megan-laurie.pdf" download="web-resume-megan-laurie.pdf"><button className='btn'><i className="fa-solid fa-download"></i>Download Resume</button></a>
             </div>
           </div>
       </Section>

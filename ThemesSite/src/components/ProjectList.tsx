@@ -14,8 +14,6 @@ const truncateText = (text: string, maxLength: number) => {
 };
 
 const ProjectList = ({ projects }: ProjectListProps) => (
-  
-  
   <div className="projects-grid">
     {projects.map((project) => (
       <div className="project-item-container" key={project.id}>

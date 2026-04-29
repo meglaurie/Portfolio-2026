@@ -39,15 +39,16 @@ const Projects: React.FC = () => {
             <h1 id="project-title" className="project-title">{project.title}</h1>
             <CaseStudyTimeline/>
             <SectionTitle title = {'Project Background'}></SectionTitle>
-            <p id="background">{project.background}</p>
+            <div dangerouslySetInnerHTML={{ __html: project?.background || "" }} />
             <SectionTitle title = {'My Role'}></SectionTitle>
-            <p id="role">{project.role}</p>
+            <div dangerouslySetInnerHTML={{ __html: project?.role || "" }} />
             <SectionTitle title = {'Design Process'}></SectionTitle>
-            <p id="design">{project.design}</p>
+            {/* <p id="design">{project.design}</p> */}
+            <div dangerouslySetInnerHTML={{ __html: project?.design || "" }} />
             <SectionTitle title = {'Challenges and Solutions'}></SectionTitle>
-            <p id="challenges">{project.challenges}</p>
+            <div dangerouslySetInnerHTML={{ __html: project?.challenges || "" }} />
             <SectionTitle title = {'Outcomes and Impact'}></SectionTitle>
-            <p id="impact">{project.impact}</p>
+            <div dangerouslySetInnerHTML={{ __html: project?.impact || "" }} />
             <div className="images-container">
               {imageUrls
                 .filter((url) => url && url.trim() !== null) // Filter out empty strings

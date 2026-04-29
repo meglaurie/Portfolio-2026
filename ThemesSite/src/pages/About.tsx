@@ -19,16 +19,19 @@ function About() {
               I’m proficient with design tools like Adobe Creative Suite, Figma, and Sketch, and equally comfortable building responsive, high-performance applications using React, TypeScript, Node.js, NPM, and Git. I thrive in environments where creativity and technical precision intersect, always focusing on delivering thoughtful, user-friendly solutions.
             </p>
             <p className='about-description'>
+              This website was built with React, TypeScript, and Vite, showcasing my ability to create a polished, responsive portfolio that highlights my work and design philosophy. Please checkout the code on <a target="_blank" href="https://github.com/meglaurie/Portfolio-2026">Github</a>.
+            </p>
+            <p className='about-description'>
               I’m based in Calgary, Alberta, nestled near the breathtaking Canadian Rockies.
             </p>
             <p className='about-description'>
-            Outside of work, you’ll often find me hiking through the mountains, cycling around the city, learning to longboarding, or traveling to new destinations.
+              Outside of work, you’ll often find me hiking through the mountains, cycling around the city, learning to longboard, and going on adventures.
             </p>
             <p className='about-description'>
               I’m powered by loud music and orange pekoe tea—two essential ingredients for creativity.
             </p>
             <div className='btn-container'>
-              <Link to="/" className="btn">Download Resume</Link>
+              <Link to="/" className="btn"><i className="fa-solid fa-download"></i>Download Resume</Link>
             </div>
           </div>
       </Section>

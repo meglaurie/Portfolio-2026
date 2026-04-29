@@ -62,8 +62,8 @@ function Nav() {
           {/* Desktop menu */}
           <div className="nav-section-left desktop-menu">
             <Link className="nav-link" to="/">Home</Link>
-            <Link className="nav-link" to="/projects">Projects</Link>
             <Link className="nav-link" to="/about">About</Link>
+            <Link className="nav-link" to="/projects">Projects</Link>
             <div className="nav-link" onClick={toggleTheme}>
               {theme === "light" ? <i className="fa-solid fa-sun"></i> : <i className="fa-solid fa-moon"></i>}
             </div>
@@ -74,8 +74,8 @@ function Nav() {
         <div className={`mobile-menu ${isOpen ? "open" : ""} ${isClosing ? "closing" : ""}`}>
         <div className="close-btn" onClick={closeMenu}>×</div>
           <Link onClick={closeMenu} to="/">Home</Link>
-          <Link onClick={closeMenu} to="/projects">Projects</Link>
           <Link onClick={closeMenu} to="/about">About</Link>
+          <Link onClick={closeMenu} to="/projects">Projects</Link>
         </div>
       </nav>
     </>

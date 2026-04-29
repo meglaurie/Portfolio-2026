@@ -38,23 +38,30 @@ const Projects: React.FC = () => {
         <div className="project-container">
             <h1 id="project-title" className="project-title">{project.title}</h1>
             <CaseStudyTimeline/>
-            <SectionTitle title = {'Project Background'}></SectionTitle>
-            <div dangerouslySetInnerHTML={{ __html: project?.background || "" }} />
-            <SectionTitle title = {'My Role'}></SectionTitle>
-            <div dangerouslySetInnerHTML={{ __html: project?.role || "" }} />
-            <SectionTitle title = {'Design Process'}></SectionTitle>
-            {/* <p id="design">{project.design}</p> */}
-            <div dangerouslySetInnerHTML={{ __html: project?.design || "" }} />
-            <SectionTitle title = {'Challenges and Solutions'}></SectionTitle>
-            <div dangerouslySetInnerHTML={{ __html: project?.challenges || "" }} />
-            <SectionTitle title = {'Outcomes and Impact'}></SectionTitle>
-            <div dangerouslySetInnerHTML={{ __html: project?.impact || "" }} />
-            <div className="images-container">
-              {imageUrls
-                .filter((url) => url && url.trim() !== null) // Filter out empty strings
-                .map((url, index) => (
-                  <img key={index} src={url} alt={`${project.id} - Image ${index + 1}`} />
-                ))}
+            <div className="project-text-container">
+              <SectionTitle title = {'Project Background'}></SectionTitle>
+              <div id="background" dangerouslySetInnerHTML={{ __html: project?.background || "" }} />
+              <hr/>
+              <SectionTitle title = {'My Role'}></SectionTitle>
+              <div id="role" dangerouslySetInnerHTML={{ __html: project?.role || "" }} />
+              <hr />
+              <SectionTitle title = {'Design Process'}></SectionTitle>
+              <div id="design" dangerouslySetInnerHTML={{ __html: project?.design || "" }} />
+              <hr />
+              <SectionTitle title = {'Challenges and Solutions'}></SectionTitle>
+              <div id="challenges" dangerouslySetInnerHTML={{ __html: project?.challenges || "" }} />
+              <hr />
+              <SectionTitle title = {'Outcomes and Impact'}></SectionTitle>
+              <div id="impact" dangerouslySetInnerHTML={{ __html: project?.impact || "" }} />
+              <div className="images-container">
+                {imageUrls
+                  .filter((url) => url && url.trim() !== null) // Filter out empty strings
+                  .map((url, index) => (
+                    <div className="project-image-container" key={index}>
+                      <img className="project-image" key={index} src={url} alt={`${project.id} - Image ${index + 1}`} />
+                    </div>     
+                  ))}
+              </div>
             </div>
         </div>
     </Section>

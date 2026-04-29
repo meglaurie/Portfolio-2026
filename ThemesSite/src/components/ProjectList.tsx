@@ -17,7 +17,7 @@ const ProjectList = ({ projects }: ProjectListProps) => (
   <div className="projects-grid">
     {projects.map((project) => (
       <div className="project-item-container" key={project.id}>
-        <img src={PinkBackground} alt={`${project.title} thumbnail`} className="project-thumbnail" />
+        <img src={project.thumbnail ? project.thumbnail : PinkBackground} alt={`${project.title} thumbnail`} className="project-thumbnail" />
         {/* <i className="fa-solid fa-folder-open project-folder fa-2xl"></i> */}
         <h3 className='project-title'>
           {truncateText(project.title, 32)} {/* Limit to 30 characters */}

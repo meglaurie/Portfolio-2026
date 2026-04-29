@@ -12,4 +12,5 @@ export interface Project {
     imageUrl4: string | null;
     imageUrl5: string | null;
     imageUrl6: string | null;
+    thumbnail: string | null;
   }

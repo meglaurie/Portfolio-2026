@@ -1,6 +1,7 @@
 import type { Project } from '../types/Project';
 import LinkButton from './LinkButton';
-import PinkBackground from '../assets/imgs/Pink-Background.png';
+// import PinkBackground from '../assets/imgs/Pink-Background.png';
+import PlaceholderThumbnail from './PlaceholderThumbnail.tsx';
 
 interface ProjectListProps {
   projects: Project[];
@@ -17,11 +18,11 @@ const ProjectList = ({ projects }: ProjectListProps) => (
   <div className="projects-grid">
     {projects.map((project) => (
       <div className="project-item-container" key={project.id}>
-        <img src={project.thumbnail ? project.thumbnail : PinkBackground} alt={`${project.title} thumbnail`} className="project-thumbnail" />
-        {/* <i className="fa-solid fa-folder-open project-folder fa-2xl"></i> */}
-        <h3 className='project-title'>
+        <PlaceholderThumbnail />
+        {/* <img src={project.thumbnail ? project.thumbnail : PinkBackground} alt={`${project.title} thumbnail`} className="project-thumbnail" /> */}
+        <h4 className='project-title'>
           {truncateText(project.title, 32)} {/* Limit to 30 characters */}
-        </h3>
+        </h4>
         <LinkButton to={`/projects/${project.id}`} label={'View'}></LinkButton>
       </div>
     ))}

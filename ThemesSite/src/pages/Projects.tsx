@@ -34,14 +34,14 @@ const Projects: React.FC = () => {
 
   return (
     <>
-      <Section title={null} >
+      <Section title={"Case Study"} >
         <div className="project-container">
             <h1 id="project-title" className="project-title">{project.title}</h1>
             <CaseStudyTimeline/>
             <div className="project-text-container">
               <SectionTitle title = {'Project Background'}></SectionTitle>
               <div id="background" dangerouslySetInnerHTML={{ __html: project?.background || "" }} />
-              <hr/>
+              <hr />
               <SectionTitle title = {'My Role'}></SectionTitle>
               <div id="role" dangerouslySetInnerHTML={{ __html: project?.role || "" }} />
               <hr />

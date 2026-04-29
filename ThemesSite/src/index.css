@@ -6,8 +6,10 @@
 @import './assets/styles/Kawaii/CaseStudyTimeline.css';
 @import './assets/styles/Kawaii/Global-Kawaii.css';
 @import './assets/styles/Kawaii/Nav.css';
+@import './assets/styles/Kawaii/PlaceholderThumbnail.css';
 @import './assets/styles/Kawaii/ProjectList.css';
 @import './assets/styles/Kawaii/Section.css';
+@import './assets/styles/Kawaii/SocialIcon.css';
 @import './assets/styles/Kawaii/Responsive.css';
 
 * {

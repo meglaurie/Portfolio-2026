@@ -11,12 +11,12 @@ function Home() {
           <h1 className="hero-title">Megan Laurie</h1>
           <p className="hero-subtitle">UX/UI Designer + Fontend Developer </p>
           <p className="hero-description">
-            Bridging Design and Development with Precision and Passion. My unique ability to connect the creative with the technical ensures that every project not only looks great but functions flawlessly. I thrive on transforming user-centric designs into smooth, interactive, and accessible digital experiences that delight users and meet business goals.
+            Bridging Design and Development with Precision and Passion. I thrive on transforming user-centric designs into smooth, interactive, and accessible digital experiences that delight users and meet business goals.
           </p>
           <div className="social-icons">
-            <i className="fa-brands fa-linkedin fa-2xl"></i>
-            <i className="fa-brands fa-github-alt fa-2xl"></i>
-            <i className="fa-solid fa-envelope fa-2xl"></i>
+            <a href="https://www.linkedin.com/in/megan-laurie/" target="_blank"><i className="icon fa-brands fa-linkedin fa-2xl"></i></a>
+            <a href="https://github.com/meglaurie" target="_blank"><i className="icon fa-brands fa-github-alt fa-2xl"></i></a>
+            <a href="mailto:hello@meganlaurie.ca" target="_blank"><i className="icon fa-solid fa-envelope fa-2xl"></i></a>
           </div>
         </Section>
       </div>

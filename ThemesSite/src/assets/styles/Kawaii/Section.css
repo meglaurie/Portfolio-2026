@@ -29,6 +29,13 @@
   z-index: 2; /* Ensure it stays on top of the scrollable content */
 }
 
+.close-btn{
+  right:10px;
+  top: 2px;
+  font-size: 24px;
+  font-weight: bolder;
+}
+
 .section-title {
   font-family: 'ArcadeClassic';
   font-size: 20px;
@@ -64,6 +71,10 @@
     background: rgb(30, 30, 30, 0.85);
     border: 3px solid hsl(0, 0%, 12%);
     color: #f2f2f2;
+  }
+  .window-bar {
+    background-color: #7f77dd;
+    border-bottom: 3px solid #1e1e1e;
   }
 }
 

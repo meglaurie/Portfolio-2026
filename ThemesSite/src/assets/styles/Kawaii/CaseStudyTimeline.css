@@ -138,6 +138,18 @@
   letter-spacing: 0.05em;
 }
 
+.dark{
+  .tl-track {
+    background: #D4A5E8;
+    border-color: #AFA9EC;
+  }
+
+  .tl-node:hover .tl-label {
+    background: #D4A5E8;
+  }
+
+}
+
 @media (max-width: 500px) {
   .tl-label {
     font-size: 10px;

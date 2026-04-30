@@ -9,7 +9,7 @@ function About() {
             <img src={profilePhoto} alt="About Me" className="about-image" />
             <h1 className='about-title'>About Me</h1>
             <p className='about-description'>
-              Hi there! I'm Megan, a passionate UX/UI designer, frontend developer, illustrator, and self-proclaimed pixel nerd. With over 10 years of experience, I specialize in creating intuitive, user-centered applications for both web and mobile platforms.
+              Hi there! I'm Megan, a passionate UX/UI designer, frontend developer, and self-proclaimed pixel nerd. With over 10 years of experience, I specialize in creating intuitive, user-centered applications for both web and mobile platforms.
             </p>
             <p className='about-description'>
               Throughout my career, I’ve had the privilege of working across a wide range of industries, including digital marketing, healthcare, semiconductor manufacturing, conference management, and AI, delivering seamless design and functionality. My expertise spans the entire product development lifecycle: from ideation and design to development and testing, ensuring a cohesive bridge between design and engineering teams.

@@ -24,10 +24,10 @@
 
 @font-face {
   font-family: 'ArcadeClassic';
-  src: url('./assets/fonts/ARCADECLASSIC.TTF') format('tiff');
+  src: url('./assets/fonts/ARCADECLASSIC.TTF') format('truetype');
   font-weight: normal;
   font-style: normal;
-  font-display: swap; /* Improves performance by showing fallback text first */
+  font-display: swap;
 }
 
 body {

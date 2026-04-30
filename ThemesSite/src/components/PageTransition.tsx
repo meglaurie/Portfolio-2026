@@ -1,5 +1,5 @@
 // components/PageTransition.tsx
-import { motion } from "framer-motion";
+import { motion, type Transition } from "framer-motion";
 
 const variants = {
   initial:  { x: "-100%", opacity: 0 },
@@ -7,11 +7,11 @@ const variants = {
   exit:     { x: "100%", opacity: 0 },
 };
 
-const transition = {
-    type: "spring",
-    stiffness: 150,
-    damping: 28,
-  };
+const transition: Transition = {
+  type: "spring",
+  stiffness: 150,
+  damping: 28,
+};
 
 function PageTransition({ children }: { children: React.ReactNode }) {
   return (

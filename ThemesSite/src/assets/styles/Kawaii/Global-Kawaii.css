@@ -102,41 +102,87 @@
   ul li:nth-child(n+6)::before { background: #D4A5E8; }
 
   .dark{
-    .hero-title, .hero-subtitle{
-      color: #fff;
-      text-shadow:
-      0 0 1px #fff,
-      0 0 2px #fff,
-      0 0 3px #fff,
-      0 0 5px #d3a6fb,
-      0 0 35px #d3a6fb,
-      0 0 45px #d3a6fb,
-      0 0 60px #d3a6fb,
-      0 0 70px #d3a6fb;
-      transition: transform 0.3s ease;
-      animation: flicker 2.5s infinite alternate;
-    }
     .hero-description{
       color: #f2f2f2;
     }
+
+    .hero-title,.hero-subtitle{
+      position: relative;
+      color: #ffffff;
+      font-weight: 700;
+    }
+    
+    /* CORE TEXT */
+    .hero-title,.hero-subtitle {
+      text-shadow: 0 0 2px #fff;
+    }
+    
+    /* OUTER GLOW LAYER */
+    .hero-title::before {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+    
+      color: #d3a6fb;
+      filter: blur(10px);
+    
+      opacity: 0.9;
+      z-index: -1;
+      pointer-events: none;
+      animation: glowPulse 2s ease-in-out infinite alternate;
+    }
+
+    .hero-subtitle::before{
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+    
+      color: #d3a6fb;
+      filter: blur(10px);
+    
+      opacity: 0.9;
+      z-index: -1;
+      pointer-events: none;
+      animation: glowPulse 2s ease-in-out infinite alternate;
+    }
+    
+    /* INNER BRIGHT GLOW LAYER */
+    .hero-title::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+    
+      color: #ffffff;
+      text-shadow:
+        0 0 6px #fff,
+        0 0 12px #d3a6fb,
+        0 0 24px #d3a6fb;
+    
+      opacity: 0.6;
+      z-index: -2;
+      pointer-events: none;
+    }
+    .hero-subtitle::before{
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+    
+      color: #ffffff;
+      text-shadow:
+        0 0 6px #fff,
+        0 0 12px #d3a6fb,
+        0 0 24px #d3a6fb;
+    
+      opacity: 0.6;
+      z-index: -2;
+      pointer-events: none;
+    }
   }
 
-  /* @keyframes flicker {
-    0%, 18%, 22%, 25%, 53%, 57%, 100% {
-      text-shadow:
-        0 0 4px #fff,
-        0 0 11px #fff,
-        0 0 19px #fff,
-        0 0 40px #d3a6fb,
-        0 0 80px #d3a6fb,
-        0 0 90px #d3a6fb,
-        0 0 100px #d3a6fb,
-        0 0 150px #d3a6fb;
-    }
-    20%, 24%, 55% {       
-      text-shadow: none;
-    }
-  } */
   
+  @keyframes glowPulse {
+    from { opacity: 0.4; transform: scale(1); }
+    to   { opacity: 0.9; transform: scale(1.02); }
+  }
 
   

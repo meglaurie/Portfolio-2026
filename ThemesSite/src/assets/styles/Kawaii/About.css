@@ -32,4 +32,7 @@
     float: left;
     margin: 0 20px 20px 0;    
     border: #1e1e1e solid 3px;
+    pointer-events: none;
+    user-select: none;
   }
+  

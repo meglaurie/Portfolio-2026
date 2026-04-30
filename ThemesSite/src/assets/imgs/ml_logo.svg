@@ -1,0 +1,37 @@
+<svg width="320" height="120" viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>ML Logo</title>
+  <defs>
+    <style>
+      .logo-bg { fill: #EEEDFE; stroke: #26215C; stroke-width: 3; }
+      .shadow  { fill: #26215C; }
+      .letter  { fill: #D4A5E8; stroke: #26215C; stroke-width: 3.5; stroke-linejoin: round; }
+      .shine   { fill: rgba(255,255,255,0.6); }
+      .gem     { stroke: #26215C; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <!-- shadow -->
+  <rect x="5" y="7" width="310" height="108" rx="14" class="shadow"/>
+  <!-- card -->
+  <rect x="0" y="2" width="310" height="108" rx="14" class="logo-bg"/>
+  <!-- shine streak -->
+  <rect x="4" y="5" width="302" height="46" rx="12" class="shine"/>
+
+  <!-- M -->
+  <polygon points="28,92 28,28 48,28 73,62 98,28 118,28 118,92 98,92 98,52 73,82 48,52 48,92" class="letter"/>
+  <polygon points="31,31 46,31 71,65 96,31 115,31 115,36 71,72 31,36" class="shine" style="opacity:0.35"/>
+
+  <!-- L -->
+  <polygon points="136,28 158,28 158,74 198,74 198,92 136,92" class="letter"/>
+  <polygon points="139,31 155,31 155,36 139,36" class="shine" style="opacity:0.35"/>
+
+  <!-- corner gems -->
+  <circle cx="272" cy="16" r="8"  fill="#F4C0D1" class="gem"/><ellipse cx="269" cy="13" rx="3" ry="2" class="shine"/>
+  <circle cx="287" cy="32" r="6"  fill="#97ACFA" class="gem"/><ellipse cx="285" cy="30" rx="2" ry="1.5" class="shine"/>
+  <circle cx="277" cy="48" r="5"  fill="#AFA9EC" class="gem"/>
+
+  <!-- sparkle stars -->
+  <polygon points="218,14 220,20 226,20 221,24 223,30 218,26 213,30 215,24 210,20 216,20" fill="#7F77DD" opacity="0.7"/>
+  <polygon points="12,104 13,107 16,107 14,109 15,112 12,110 9,112 10,109 8,107 11,107"  fill="#F4C0D1" opacity="0.8"/>
+  <polygon points="300,96  301,98  304,98  302,100 303,102 300,101 297,102 298,100 296,98  299,98"  fill="#97ACFA" opacity="0.7"/>
+</svg>

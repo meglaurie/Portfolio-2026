@@ -8,8 +8,8 @@ function Home() {
       <div className="home-grid">
         {/* Hero Section */}
         <Section title="Portfolio 2026">
-          <h1 className="hero-title">Megan Laurie</h1>
-          <p className="hero-subtitle">UX/UI Designer + Fontend Developer </p>
+          <h1 className="hero-title" data-text="Megan Laurie">Megan Laurie</h1>
+          <p className="hero-subtitle" data-text="UX/UI Designer + Fontend Developer">UX/UI Designer + Fontend Developer </p>
           <p className="hero-description">
             Bridging Design and Development with Precision and Passion. I thrive on transforming user-centric designs into smooth, interactive, and accessible digital experiences that delight users and meet business goals.
           </p>

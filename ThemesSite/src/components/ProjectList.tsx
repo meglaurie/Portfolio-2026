@@ -21,7 +21,7 @@ const ProjectList = ({ projects }: ProjectListProps) => (
         <PlaceholderThumbnail />
         {/* <img src={project.thumbnail ? project.thumbnail : PinkBackground} alt={`${project.title} thumbnail`} className="project-thumbnail" /> */}
         <h4 className='project-title'>
-          {truncateText(project.title, 32)} {/* Limit to 30 characters */}
+          {project.title ? truncateText(project.title, 32) : "Untitled"}
         </h4>
         <LinkButton to={`/projects/${project.id}`} label={'View'}></LinkButton>
       </div>

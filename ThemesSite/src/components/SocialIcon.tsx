@@ -1,13 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface SocialIconProps {
   href: string;
   icon: [string, string];
 }
 
-const SocialIcon = ({ href, icon }: SocialIconProps) => (
+const SocialIcon = ({ href }: SocialIconProps) => (
   <a href={href} className="icon">
-    <FontAwesomeIcon icon={icon} />
   </a>
 );
 

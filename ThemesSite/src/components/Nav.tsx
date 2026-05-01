@@ -54,6 +54,9 @@ function Nav() {
           <Link onClick={closeMenu} to="/">Home</Link>
           <Link onClick={closeMenu} to="/about">About</Link>
           <Link onClick={closeMenu} to="/projects">Projects</Link>
+          <div className="nav-link mode-btn" onClick={toggleTheme}>
+              {theme === "light" ? <i className="fa-solid fa-sun"></i> : <i className="fa-solid fa-moon"></i>}
+          </div>
         </div>
       </nav>
     </>

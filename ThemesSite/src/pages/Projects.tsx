@@ -76,7 +76,7 @@ const Projects: React.FC = () => {
 
           <div className="images-container">
             {imageUrls.map((url, index) => (
-              <div className="project-image-container" key={index}>
+              <div className="project-image-container" key={url}>
                 <img
                   className="project-image"
                   src={url}

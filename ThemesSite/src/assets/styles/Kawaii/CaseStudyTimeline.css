@@ -120,7 +120,8 @@
   border-radius: 8px;
   padding: 4px 10px;
   box-shadow: 2px 2px 0px #3C3489;
-  white-space: nowrap;
+  white-space: normal;
+  text-align: left;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   transition: background 0.12s ease;
@@ -165,3 +166,40 @@
     font-size: 16px;
   }
 }
+
+@media (max-width: 768px) {
+  .tl-line-wrap {
+    flex-direction: column;
+    align-items: center; 
+    gap: 24px;
+  }
+
+  .tl-track {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    height: auto;
+  }
+
+  .tl-node {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-left: 0;
+  }
+
+  .tl-label {
+    white-space: normal;
+    text-align: center;
+  }
+  .tl-gem {
+    position: relative;
+    left: auto;
+  }
+  .tl-wrap {
+    padding: 0 12px;
+  }
+}
+

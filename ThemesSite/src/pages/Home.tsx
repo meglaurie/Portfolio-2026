@@ -6,10 +6,9 @@ function Home() {
   return (
     <div className="home-container">
       <div className="home-grid">
-        {/* Hero Section */}
         <Section title="Portfolio 2026">
           <h1 className="hero-title" data-text="Megan Laurie">Megan Laurie</h1>
-          <p className="hero-subtitle" data-text="UX Engineer Designing Scalable Product Experiences">UX/UI Designer + Fontend Developer </p>
+          <p className="hero-subtitle" data-text="UX Engineer Designing Scalable Product Experiences">UX Engineer - Designing Scalable Product Experiences </p>
           <p className="hero-description">
             Bridging product design and frontend development through accessible interfaces, design systems, and production-ready UI.
           </p>

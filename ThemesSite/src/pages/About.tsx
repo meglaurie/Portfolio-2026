@@ -21,13 +21,7 @@ function About() {
               This website was built with React, TypeScript, and Vite, showcasing my ability to create a polished, responsive portfolio that highlights my work and design philosophy. Please checkout the code on <a target="_blank" href="https://github.com/meglaurie/Portfolio-2026">Github</a>.
             </p>
             <p className='about-description'>
-              I’m based in Calgary, Alberta, nestled near the breathtaking Canadian Rockies.
-            </p>
-            <p className='about-description'>
-              Outside of work, you’ll often find me hiking through the mountains, cycling around the city, learning to longboard, and going on adventures.
-            </p>
-            <p className='about-description'>
-              I’m powered by loud music and orange pekoe tea—two essential ingredients for creativity.
+              I’m based in Calgary, Alberta, located near the beautiful Canadian Rockies. Outside of work, you’ll often find me hiking through the mountains, learning to longboard, and going on adventures.
             </p>
             <div className='btn-container'>
               <a href="../src/assets/styles/web-resume-megan-laurie.pdf" download="web-resume-megan-laurie.pdf"><button className='btn'><i className="fa-solid fa-download"></i>Download Resume</button></a>

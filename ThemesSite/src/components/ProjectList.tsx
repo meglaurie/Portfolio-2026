@@ -1,6 +1,5 @@
 import type { Project } from '../types/Project';
 import LinkButton from './LinkButton';
-// import PinkBackground from '../assets/imgs/Pink-Background.png';
 import PlaceholderThumbnail from './PlaceholderThumbnail.tsx';
 
 interface ProjectListProps {

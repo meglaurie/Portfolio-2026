@@ -9,9 +9,9 @@ function Home() {
         {/* Hero Section */}
         <Section title="Portfolio 2026">
           <h1 className="hero-title" data-text="Megan Laurie">Megan Laurie</h1>
-          <p className="hero-subtitle" data-text="UX/UI Designer + Fontend Developer">UX/UI Designer + Fontend Developer </p>
+          <p className="hero-subtitle" data-text="UX Engineer Designing Scalable Product Experiences">UX/UI Designer + Fontend Developer </p>
           <p className="hero-description">
-            Bridging Design and Development with Precision and Passion. I thrive on transforming user-centric designs into smooth, interactive, and accessible digital experiences that delight users and meet business goals.
+            Bridging product design and frontend development through accessible interfaces, design systems, and production-ready UI.
           </p>
           <div className="social-icons">
             <a href="https://www.linkedin.com/in/megan-laurie/" target="_blank"><i className="icon fa-brands fa-linkedin fa-2xl"></i></a>

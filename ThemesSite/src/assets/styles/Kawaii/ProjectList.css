@@ -56,9 +56,7 @@
 
 .project-image {
   width: 100%;
-  height: auto;
-  max-height: 300px;
-  min-height: max-content;
+  max-height: 400px;
   object-fit: cover;
 }
 

@@ -18,7 +18,6 @@ const ProjectList = ({ projects }: ProjectListProps) => (
     {projects.map((project) => (
       <div className="project-item-container" key={project.id}>
         <PlaceholderThumbnail />
-        {/* <img src={project.thumbnail ? project.thumbnail : PinkBackground} alt={`${project.title} thumbnail`} className="project-thumbnail" /> */}
         <h4 className='project-title'>
           {project.title ? truncateText(project.title, 32) : "Untitled"}
         </h4>

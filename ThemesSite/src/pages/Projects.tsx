@@ -30,6 +30,8 @@ const Projects: React.FC = () => {
     (url): url is string => typeof url === "string" && url.trim() !== ""
   );
 
+  console.log("urls:", project.imageUrl1, project.imageUrl2, project.imageUrl3, project.imageUrl4, project.imageUrl5, project.imageUrl6);
+
   return (
     <Section title={"Case Study"}>
       <div className="project-container">
